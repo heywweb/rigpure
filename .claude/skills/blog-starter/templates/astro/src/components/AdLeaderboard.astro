@@ -1,0 +1,11 @@
+---
+// Leaderboard 728×90 — emplacement d'annonce. Remplacer par votre créative
+// servie depuis R2 (/media/ads/…) une fois disponible.
+interface Props { href?: string }
+const { href = '#' } = Astro.props;
+---
+<div class="ad-slot ad-leaderboard">
+  <a href={href} rel="sponsored nofollow" aria-label="Advertisement">
+    <div class="ad-inner">Advertisement · 728×90</div>
+  </a>
+</div>

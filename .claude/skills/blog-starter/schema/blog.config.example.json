@@ -1,0 +1,15 @@
+{
+  "brand": "BlogStarter",
+  "domain": "votreblog.com",
+  "niche": "guides de jeux live-service",
+  "language": "en",
+  "categories": ["Guides", "News", "Reviews", "Setup"],
+  "theme": { "preset": "command-hud" },
+  "authors": [
+    { "name": "Alex", "bio": "Rédacteur gaming, joue et teste chaque titre couvert." }
+  ],
+  "seeds": ["Genshin Impact", "Honkai: Star Rail", "Wuthering Waves"],
+  "modules": ["gaming"],
+  "content": { "articlesPerCategory": 3 },
+  "monetization": { "ads": true, "affiliate": true, "cpi": true }
+}

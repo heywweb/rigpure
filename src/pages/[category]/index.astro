@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import AdLeaderboard from '../../components/AdLeaderboard.astro';
+import AdRectangle from '../../components/AdRectangle.astro';
+import { CATEGORIES, getCategory, listByCategory, countByCategory, trending } from '../../lib/queries';
+import { env } from 'cloudflare:workers';
+
+const { category } = Astro.params;
+if (!category || !CATEGORIES.includes(category as any)) return Astro.rewrite('/404');
+
+const DB = (env as any).DB as D1Database;
+const cat = await getCategory(DB, category);
+if (!cat) return Astro.rewrite('/404');
+
+const PER = 12;
+const page = Math.max(1, parseInt(Astro.url.searchParams.get('page') || '1', 10) || 1);
+const total = await countByCategory(DB, category);
+const pages = Math.max(1, Math.ceil(total / PER));
+const arts = await listByCategory(DB, category, PER, (page - 1) * PER);
+const trend = await trending(DB, 4);
+const heroCover = (arts[0] as any)?.cover;
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+// SEO pagination : canonical auto-référente, noindex,follow au-delà de la page 1 (évite le duplicate/thin)
+const canonical = page > 1
+  ? new URL(`/${category}?page=${page}`, Astro.site).href
+  : new URL(`/${category}`, Astro.site).href;
+---
+<BaseLayout title={page > 1 ? `${cat.name} — page ${page} — RigPure` : `${cat.name} — RigPure`} description={cat.description as string} active={category} canonical={canonical} noindex={page > 1}>
+  <div class="ad-band"><div class="container"><AdLeaderboard /></div></div>
+
+  <div class="article-wrap">
+    <div class="container">
+      <nav class="breadcrumb" style="margin-bottom:16px" aria-label="Breadcrumb"><a href="/">Home</a><span class="chev" aria-hidden="true">/</span><span class="current">{cat.name}</span></nav>
+
+      <div class="hub-header">
+        {heroCover ? <img class="bg" src={heroCover} alt={cat.name as string} /> : <div class="bg ph-img ph-3"></div>}
+        <span class="badge" style="align-self:flex-start">Category</span>
+        <h1 class="h-title">{cat.name}</h1>
+        <p class="h-desc">{cat.description}</p>
+        <div class="h-stats"><div class="hs"><b>{total}</b><span>Articles</span></div></div>
+      </div>
+
+      <div class="listing-layout">
+        <main>
+          <div class="section-head" style="margin-bottom:20px"><h2>All {cat.name}</h2><span class="see-all">{total} results</span></div>
+          <div class="listing-grid">
+            {arts.map((a: any, i: number) => (
+              <>
+                <ArticleCard art={a} index={(page - 1) * PER + i + 1} />
+                {i === 3 && <div class="ad-slot ad-inline grid-span-all"><div class="ad-inner">Native in-feed block</div></div>}
+              </>
+            ))}
+          </div>
+
+          {pages > 1 && (
+            <div class="pagination" style="margin-top:28px;justify-content:center">
+              {page > 1 && <a href={`/${category}?page=${page - 1}`} class="btn btn-ghost btn-sm">‹ PREV</a>}
+              {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
+                p === page ? <span class="page current">{p}</span> : <a href={`/${category}?page=${p}`}>{p}</a>
+              ))}
+              {page < pages && <a href={`/${category}?page=${page + 1}`} class="btn btn-ghost btn-sm">NEXT ›</a>}
+            </div>
+          )}
+        </main>
+
+        <aside class="listing-side">
+          <AdRectangle />
+          <div>
+            <div class="section-head" style="margin-bottom:14px"><h2 style="font-size:var(--fs-lg)">Trending</h2></div>
+            <div class="trending">
+              {trend.map((a: any, i: number) => (
+                <a class="tr-item" href={`/${a.catSlug}/${a.slug}`} style={`color:inherit;${i === trend.length - 1 ? 'border:none' : ''}`}>
+                  <span class="rank">{i + 1}</span><div><h4>{a.title}</h4><div class="t-meta">{a.catName.toUpperCase()}</div></div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

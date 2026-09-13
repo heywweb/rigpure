@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import AdLeaderboard from '../../components/AdLeaderboard.astro';
+import AdRectangle from '../../components/AdRectangle.astro';
+import { CATEGORIES, getArticle, relatedArticles } from '../../lib/queries';
+import { badgeClass, fmtDate, readTime, withHeadingIds, parseJsonArray } from '../../lib/util';
+import { env } from 'cloudflare:workers';
+
+const { category, slug } = Astro.params;
+if (!category || !CATEGORIES.includes(category as any)) return Astro.rewrite('/404');
+
+const DB = (env as any).DB as D1Database;
+const a: any = await getArticle(DB, category, slug!);
+if (!a) return Astro.rewrite('/404');
+
+const { html, toc } = withHeadingIds(a.body_html || '');
+const pros = parseJsonArray(a.pros);
+const cons = parseJsonArray(a.cons);
+const related = await relatedArticles(DB, a.id, a.game_id, 3);
+const isReview = a.catSlug === 'reviews';
+const siteHref = Astro.site?.href ?? 'https://{{domain}}/';
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const imgAbs = a.cover ? new URL(a.cover, Astro.site).href : `${siteHref}logo.svg`;
+const authorNode: Record<string, unknown> = { '@type': 'Person', name: a.authorName || '{{author}}' };
+if (a.authorTwitter) authorNode.sameAs = [`https://twitter.com/${String(a.authorTwitter).replace(/^@/, '')}`];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': isReview ? 'Review' : 'Article',
+      headline: a.title,
+      description: a.dek,
+      image: imgAbs,
+      datePublished: a.published_at,
+      dateModified: a.updated_at || a.published_at,
+      author: authorNode,
+      publisher: { '@id': `${siteHref}#org` },
+      mainEntityOfPage: pageUrl,
+      ...(isReview && a.rating
+        ? { reviewRating: { '@type': 'Rating', ratingValue: String(a.rating), bestRating: '10', worstRating: '1' }, itemReviewed: { '@type': 'VideoGame', name: a.gameName, image: imgAbs } }
+        : {}),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: a.catName, item: new URL(`/${a.catSlug}`, Astro.site).href },
+        { '@type': 'ListItem', position: 3, name: a.title, item: pageUrl },
+      ],
+    },
+  ],
+};
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+---
+<BaseLayout
+  title={`${a.title} — {{brand}}`}
+  description={a.meta_description || a.dek}
+  active={category}
+  image={a.og_image || a.cover}
+  type="article"
+  noindex={!!a.noindex}
+  bodyStyle="padding-bottom:140px"
+  articlePublished={a.published_at}
+  articleModified={a.updated_at || a.published_at}
+  author={a.authorName || '{{author}}'}
+>
+  <div slot="head" set:html={`<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`} />
+
+  <!-- READING PROGRESS -->
+  <div class="reading-progress" style="position:sticky;top:0;z-index:60"><span id="progress" style="width:0"></span></div>
+
+  <!-- TOP AD -->
+  <div class="ad-band"><div class="container"><AdLeaderboard /></div></div>
+
+  <div class="article-wrap">
+    <!-- HERO : two columns (content left, square ad right) -->
+    <div class="container">
+      <div class="article-hero-split">
+        <div class="article-head">
+          <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="chev" aria-hidden="true">/</span><a href={`/${a.catSlug}`}>{a.catName}</a>{a.gameName && <><span class="chev" aria-hidden="true">/</span><span class="current">{a.gameName}</span></>}</nav>
+          <div class="head-tags"><span class={badgeClass(a.catSlug)}>{a.catName}</span>{a.tier && <span class="badge info">Tier {a.tier}</span>}{isReview && a.rating && <span class="badge success"><span class="dot" aria-hidden="true"></span>{a.rating}/10</span>}</div>
+          <h1>{a.title}</h1>
+          {a.dek && <p class="dek">{a.dek}</p>}
+          <div class="article-byline">
+            <span class="who"><span class="mini-av" aria-hidden="true">{(a.authorName||"{{author}}").charAt(0)}</span> By <strong style="color:var(--text)">{a.authorName || '{{author}}'}</strong></span>
+            <span class="sep" aria-hidden="true">·</span><span>{fmtDate(a.published_at)}</span>
+            {a.reading_time && <><span class="sep" aria-hidden="true">·</span><span>{readTime(a.reading_time)}</span></>}
+          </div>
+        </div>
+        <div class="hero-ad">
+          <AdRectangle />
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY + SIDEBAR -->
+    <div class="container">
+      <div class="article-body">
+        <main class="article-main flow">
+          {isReview && a.verdict && (
+            <div class="verdict">
+              <div class="v-head"><span class="rating"><span class="score">{a.rating}</span><span class="over">/ 10</span></span><h4>Verdict</h4></div>
+              <p>{a.verdict}</p>
+            </div>
+          )}
+
+          {a.cover && (
+            <div class="prose flow-sm">
+              <figure><img src={a.cover} alt={a.cover_alt || a.title} /><figcaption>{a.gameName || a.title}{a.cover_source ? ` — ${a.cover_source}` : ''}</figcaption></figure>
+            </div>
+          )}
+
+          <div class="prose" set:html={html} />
+
+          {isReview && (pros.length > 0 || cons.length > 0) && (
+            <div class="proscons">
+              <div class="pc-col pros"><h4>Pros</h4><ul>{pros.map((p) => <li>{p}</li>)}</ul></div>
+              <div class="pc-col cons"><h4>Cons</h4><ul>{cons.map((c) => <li>{c}</li>)}</ul></div>
+            </div>
+          )}
+
+          <div class="author-box">
+            <div class="avatar" aria-hidden="true">D</div>
+            <div>
+              <div class="a-name">{a.authorName || '{{author}}'} <svg class="verified" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified author"><path d="M12 2l2.4 1.8 3 .1 1 2.8 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-1 2.8-3 .1L12 22l-2.4-1.8-3-.1-1-2.8L3.2 15.5l.9-2.9-.9-2.9 2.4-1.8 1-2.8 3-.1z"/><path d="M9.5 12.5l1.8 1.8 3.5-3.8" stroke="#07080b" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="a-role">{a.authorRole || 'Editor'}</div>
+              <p class="a-bio">{a.authorBio || 'Writer at {{brand}}.'}</p>
+            </div>
+          </div>
+        </main>
+
+        <!-- SIDEBAR : ad first, then contents -->
+        <aside class="article-side">
+          <AdRectangle />
+          {toc.length > 0 && (
+            <nav class="toc" aria-label="Contents">
+              <div class="toc-title">// Contents</div>
+              <ol>{toc.map((h, i) => <li><a href={`#${h.id}`} class={i === 0 ? 'active' : ''}>{h.text}</a></li>)}</ol>
+            </nav>
+          )}
+        </aside>
+      </div>
+    </div>
+
+    <!-- RELATED -->
+    {related.length > 0 && (
+      <div class="article-related">
+        <div class="container">
+          <div class="section-head"><h2>Read next</h2><a href={`/${a.catSlug}`} class="see-all">View all →</a></div>
+          <div class="related-grid">{related.map((r: any, i: number) => <ArticleCard art={r} index={i + 1} />)}</div>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- ANCHOR AD -->
+  <div class="ad-anchor" id="anchorAd"><AdLeaderboard /><button class="close" aria-label="Close ad" onclick="closeAnchor()">✕</button></div>
+
+  <script is:inline>
+    var bar = document.getElementById('progress');
+    var main = document.querySelector('.article-main');
+    function onScroll(){ if(!main||!bar) return; var top=main.offsetTop,h=main.offsetHeight,vh=window.innerHeight; var p=(window.scrollY-top+vh*0.5)/h; bar.style.width=Math.max(0,Math.min(1,p))*100+'%'; }
+    window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+    var tocLinks=document.querySelectorAll('.toc a'), mapT={};
+    tocLinks.forEach(function(x){ var id=x.getAttribute('href').slice(1); var el=document.getElementById(id); if(el) mapT[id]=x; });
+    if(tocLinks.length){ var obs=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ tocLinks.forEach(function(x){x.classList.remove('active');}); if(mapT[e.target.id]) mapT[e.target.id].classList.add('active'); }}); },{ rootMargin:'-70px 0px -75% 0px' }); Object.keys(mapT).forEach(function(id){ obs.observe(document.getElementById(id)); }); }
+    var anchor=document.getElementById('anchorAd'), byline=document.querySelector('.article-byline'), closed=false;
+    function toggleAnchor(){ if(closed||!byline||!anchor) return; anchor.classList.toggle('is-visible', byline.getBoundingClientRect().bottom < 0); }
+    window.closeAnchor=function(){ closed=true; anchor.classList.remove('is-visible'); };
+    window.addEventListener('scroll', toggleAnchor, { passive:true }); toggleAnchor();
+  </script>
+</BaseLayout>

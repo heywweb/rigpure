@@ -1,0 +1,18 @@
+/* THÈME · cyber-magenta — magenta électrique sur noir violacé */
+:root {
+  --bg:#0a0810; --bg-elev:#0f0b18; --surface-1:#14101c; --surface-2:#1b1626; --surface-3:#241f33;
+  --border:#2a2440; --border-strong:#3a3352; --grid-line:rgba(255,46,136,.04);
+  --text:#f4f0f8; --text-soft:#b6acc2; --text-faint:#78708a; --text-dim:#4c4560;
+  --accent:#ff2e88; --accent-bright:#ff6bae; --accent-deep:#c50f63;
+  --accent-tint:rgba(255,46,136,.12); --accent-line:rgba(255,46,136,.30); --accent-glow:rgba(255,46,136,.35);
+  --grad-accent:linear-gradient(120deg,#ff6bae,#ff2e88 55%,#c50f63);
+  --on-accent:#0a0810;
+  --success:#34d399; --success-tint:rgba(52,211,153,.13);
+  --warning:#ffb020; --warning-tint:rgba(255,176,32,.13);
+  --danger:#ff4d6d;  --danger-tint:rgba(255,77,109,.13);
+  --info:#38bdf8;    --info-tint:rgba(56,189,248,.13);
+  --font-display:"Chakra Petch",system-ui,sans-serif;
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",monospace;
+  --notch:12px;
+}

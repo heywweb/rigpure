@@ -1,0 +1,101 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partie 05 — Production par agents spécialisés · BlogStarter Doc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="doc.css"></head><body>
+<header><div class="wrap"><span class="logo">B</span><span class="brand">BLOG<span>STARTER</span></span><span class="tag"><a href="index.html">← SOMMAIRE</a> · PARTIE 05</span></div></header>
+<div class="doc-hero"><div class="wrap"><a class="back" href="index.html">← Sommaire</a><span class="kick">Partie 05</span><h1>Production par agents spécialisés</h1><p class="lede">Un expert rédacteur par catégorie, un chercheur d'images dédié, et un chef d'orchestre qui répartit le travail. Voici comment 30 articles de test ont été produits en parallèle, en anglais, sous la persona Alex — et le piège qui a failli tout ralentir.</p></div></div>
+<main class="wrap doc-body"><div class="prose-doc">
+
+<h2>Pourquoi un expert rédacteur par catégorie</h2>
+<p>Un guide de progression, une actualité et un test ne s'écrivent pas de la même façon : structure, ton, format de sortie diffèrent. Plutôt qu'un rédacteur généraliste qui ferait tout moyennement, on définit <strong>un agent spécialiste par catégorie</strong>. Chacun connaît son format sur le bout des doigts, produit un frontmatter conforme, et évite le remplissage « contenu IA générique ». C'est la traduction, côté production, du positionnement éditorial du site : « on joue, on teste », une vraie valeur défendable.</p>
+<p>Les agents sont définis dans <code>.claude/agents/*.md</code>. Chaque fichier a un <strong>frontmatter</strong> (<code>name</code>, <code>description</code>, <code>tools</code>, <code>model</code>) suivi d'un <strong>prompt système</strong> détaillé (rôle, ton, format de sortie, étapes).</p>
+
+<h2>Les 4 agents</h2>
+
+<h3>1 · blogstarter-guide-writer</h3>
+<p>Rédacteur expert en <strong>guides</strong> : prise en main, progression, systèmes de jeu, tier lists, builds/méta. Ton direct, structuré, actionnable.</p>
+<pre class="cmd code"><span class="k">name:</span> blogstarter-guide-writer
+<span class="k">tools:</span> Read, Write, WebSearch, WebFetch
+<span class="k">model:</span> sonnet</pre>
+<p><em>Les trois rédacteurs (guides, news, reviews) partagent le même en-tête d'agent — <code>tools: Read, Write, WebSearch, WebFetch</code> et <code>model: sonnet</code> — seul le rôle/format de sortie change.</em></p>
+<ul>
+  <li><strong>Sortie</strong> : <code>contents/guides/&lt;slug&gt;.md</code>, frontmatter YAML (<code>category: "guides"</code>, <code>tier: null</code> ou <code>"S"</code>/<code>"A"</code>… pour une tier list, <code>reading_time: 8</code>), puis <strong>2 à 4 sections <code>##</code></strong>, listes, conseils, mini-conclusion. Cible <strong>~700–1000 mots</strong>.</li>
+  <li><strong>Étapes</strong> : lit <code>_images.json</code> (1<sup>re</sup> image du jeu → <code>cover</code>/<code>cover_alt</code>/<code>cover_source</code>), 1-2 recherches web pour ancrer le guide, puis rédige un guide adapté au <em>type réel</em> du jeu (gacha, 4X, MMO, extraction shooter, sim militaire…).</li>
+</ul>
+<div class="callout"><span class="l">Règle langue (dans le prompt)</span><p>« Tout le contenu de l'article (title, dek, tags, corps, cover_alt) doit être rédigé en ANGLAIS impeccable. Le site BlogStarter est entièrement en anglais. » La persona auteur est <strong>Alex</strong>.</p></div>
+
+<h3>2 · blogstarter-news-writer</h3>
+<p>Journaliste expert en <strong>actualité</strong> : annonces, mises à jour, événements, sorties. Attaque directe (l'info dès la première phrase), paragraphes courts, angle clair, sans hype creuse.</p>
+<ul>
+  <li><strong>Sortie</strong> : <code>contents/news/&lt;slug&gt;.md</code>, <code>category: "news"</code>, <strong>2 à 3 sections <code>##</code></strong>, éventuellement une citation ou une liste de nouveautés, phrase de clôture. Cible <strong>~450–700 mots</strong>, <code>reading_time: 4</code>.</li>
+  <li><strong>Image</strong> : utilise la <strong>2<sup>e</sup> entrée</strong> du jeu dans <code>_images.json</code> (sinon la 1<sup>re</sup>).</li>
+  <li>Reste factuel : si un détail n'est pas vérifiable, il reste général plutôt que d'inventer des chiffres.</li>
+</ul>
+
+<h3>3 · blogstarter-review-writer</h3>
+<p>Critique expert en <strong>tests</strong> : avis argumenté, honnête et nuancé, appuyé sur l'expérience de jeu. Ni complaisance, ni démolition gratuite.</p>
+<ul>
+  <li><strong>Sortie</strong> : <code>contents/reviews/&lt;slug&gt;.md</code>, <code>category: "reviews"</code>, <strong>3 à 4 sections <code>##</code></strong> (gameplay, contenu/progression, technique/monétisation, pour qui ?), et une <strong>conclusion avec verdict et note</strong>. Cible <strong>~800–1100 mots</strong>, <code>reading_time: 9</code>.</li>
+  <li><strong>Frontmatter enrichi</strong> : <code>rating</code> (note /10 à une décimale), <code>verdict</code> (phrase de synthèse), <code>pros</code> (3-4 points forts), <code>cons</code> (2-3 points faibles) — cohérents avec le corps du test.</li>
+  <li><strong>Image</strong> : utilise la <strong>3<sup>e</sup> entrée</strong> du jeu dans <code>_images.json</code> (sinon la 1<sup>re</sup>).</li>
+</ul>
+
+<h3>4 · blogstarter-photo-finder</h3>
+<p>Recherchiste iconographique. Pour chaque jeu, trouve <strong>3 images distinctes exploitables</strong> (key art / illustration officielle, capture de gameplay, logo ou artwork) et les enregistre dans <code>contents/_images.json</code>.</p>
+<ul>
+  <li><strong>Méthode</strong> : recherches web ciblées (nom du jeu + « key art », « screenshot », « official », « press kit ») ; privilégie des URLs directement chargeables (<code>.jpg</code>/<code>.png</code>/<code>.webp</code>) de sources sérieuses (site officiel, éditeur, presse, Wikimedia) ; évite les vignettes minuscules.</li>
+  <li><strong>Sortie</strong> : un JSON indexé par slug de jeu, chaque image portant <code>url</code>, <code>alt</code> (description factuelle en anglais), <code>source</code> et <code>credit</code>.</li>
+</ul>
+<pre class="cmd code"><span class="k">{</span>
+  <b>"slug-du-jeu"</b>: [
+    { <span class="k">"url"</span>: <b>"https://…"</b>, <span class="k">"alt"</span>: <b>"…"</b>, <span class="k">"source"</span>: <b>"…"</b>, <span class="k">"credit"</span>: <b>"…"</b> },
+    <span class="c">// … 3 images par jeu</span>
+  ]
+<span class="k">}</span></pre>
+<div class="callout info"><span class="l">Fallback (photo-finder)</span><p>La cible est <strong>3 images fiables par jeu</strong>, mais si le photo-finder n'en trouve pas 3 exploitables, la règle est d'en <strong>enregistrer au moins 1</strong> plutôt que de bloquer : un article doit toujours pouvoir se rabattre sur une cover valide (les rédacteurs news/reviews retombent d'ailleurs sur la 1<sup>re</sup> entrée si la leur manque).</p></div>
+<div class="callout warn"><span class="l">Droits d'image</span><p>Le champ <code>credit</code> note la provenance : ces images servent de <strong>maquette</strong>, les droits devront être vérifiés avant une publication réelle.</p></div>
+
+<h2>L'orchestration</h2>
+<p>Point de méthode central : <strong>un sous-agent ne peut pas piloter d'autres sous-agents</strong>. C'est donc le <strong>main loop qui joue le chef d'orchestre</strong> — il lance les agents, les répartit, et séquence le pipeline.</p>
+<ol class="steps">
+  <li><span class="st-t">Étape 1 — Images d'abord (photo-finder)</span><span class="st-d">Le photo-finder est lancé et écrit <code>contents/_images.json</code> : 3 images par jeu, chaque URL vérifiée HTTP 200. Ce fichier devient la source d'images partagée pour tous les rédacteurs.</span></li>
+  <li><span class="st-t">Étape 2 — 6 rédacteurs en parallèle</span><span class="st-d">Une fois <code>_images.json</code> prêt, 6 rédacteurs travaillent en parallèle : <strong>2 par catégorie</strong> (guides, news, reviews), <strong>5 jeux chacun</strong>. Chaque rédacteur <em>lit</em> <code>_images.json</code> et écrit <code>contents/&lt;cat&gt;/&lt;slug&gt;.md</code>.</span></li>
+</ol>
+<p><strong>Attribution des images par index</strong> : pour éviter que les trois articles d'un même jeu partagent la même image, chaque catégorie pioche une entrée différente du tableau du jeu :</p>
+<table class="doc-table">
+  <thead><tr><th>Catégorie</th><th>Index dans <code>_images.json</code></th></tr></thead>
+  <tbody>
+    <tr><td><strong>guides</strong></td><td><code>0</code> — 1<sup>re</sup> image (key art)</td></tr>
+    <tr><td><strong>news</strong></td><td><code>1</code> — 2<sup>e</sup> image (screenshot)</td></tr>
+    <tr><td><strong>reviews</strong></td><td><code>2</code> — 3<sup>e</sup> image (logo/artwork)</td></tr>
+  </tbody>
+</table>
+<div class="callout info"><span class="l">Pipeline</span><p>photo-finder → <code>_images.json</code> (bloquant) <strong>puis</strong> 6 rédacteurs en parallèle qui lisent ce même fichier. Séquencer les images <em>avant</em> la rédaction garantit que chaque article a une cover valide dès sa première écriture. Contenu <strong>en anglais</strong>, auteur <strong>Alex</strong>.</p></div>
+<div class="callout warn"><span class="l">Gestion d'erreur d'orchestration</span><p>Chaque agent lancé produit son propre <strong>log</strong>. En cas d'échec (fichier non écrit, frontmatter incomplet, image manquante), on ne relance pas tout le pipeline : on <strong>diagnostique via le log de l'agent concerné puis on relance cet agent isolément</strong>, avec le même prompt. Les autres rédacteurs, indépendants, ne sont pas affectés.</p></div>
+
+<h2>Le piège : agents non reconnus en cours de session</h2>
+<div class="callout danger"><span class="l">Piège réel</span><p>Les agents personnalisés de <code>.claude/agents/</code> <strong>ne sont pas reconnus s'ils sont créés en cours de session</strong> : le registre des agents est chargé au démarrage. Tenter de les invoquer par leur <code>name</code> juste après les avoir écrits échoue.</p></div>
+<p><strong>Contournement appliqué</strong> : on lance des agents <strong>general-purpose</strong> en leur passant <em>exactement le même prompt expert</em> (celui rédigé dans le fichier <code>.md</code>). Le résultat est identique. Bénéfice secondaire : une fois la session suivante démarrée, les fichiers d'agents sont chargés dans le registre et deviennent <strong>réutilisables normalement</strong> (invocables par leur nom).</p>
+
+<h2>Créer les 30 articles de test</h2>
+<p>Objectif : valider les gabarits et le rendu avec du <strong>vrai contenu</strong>, pas du lorem ipsum. Volume produit : <strong>10 jeux × 3 catégories = 30 articles</strong> (la catégorie <em>setup</em> a été laissée vide au démarrage — le hardware est en réserve).</p>
+<p>Les 10 jeux couverts :</p>
+<table class="doc-table">
+  <thead><tr><th>#</th><th>Jeu</th><th>#</th><th>Jeu</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Arknights: Endfield</td><td>6</td><td>Project Entropy</td></tr>
+    <tr><td>2</td><td>NTE</td><td>7</td><td>Enlisted</td></tr>
+    <tr><td>3</td><td>Star Trek Fleet Command</td><td>8</td><td>War Thunder</td></tr>
+    <tr><td>4</td><td>Rise of Kingdoms</td><td>9</td><td>Once Human</td></tr>
+    <tr><td>5</td><td>Raid: Shadow Legends</td><td>10</td><td>Where Winds Meet</td></tr>
+  </tbody>
+</table>
+<p>Pour chaque jeu : un guide, une news, un test. Répartis entre les 6 rédacteurs (2 par catégorie × 5 jeux), tous lisant la même banque d'images. Ces 30 fichiers Markdown sont exactement ce qui alimentera l'import vers D1 à l'étape suivante (Partie 06).</p>
+<div class="callout tip"><span class="l">Ce que ça valide</span><p>Trente articles réels dans les trois formats couvrent tous les composants des gabarits : at-a-glance, tier, stats, verdict/note, pros/cons, images dans la prose, tags, temps de lecture. Le détail de ces composants (at-a-glance, tier, pros/cons…) est décrit en <a href="03-gabarits.html">Partie 03</a>. Si le rendu tient sur ce jeu de données, il tiendra en production.</p></div>
+
+</div>
+<nav class="doc-pager"><a href="04-contenu.html"><span class="dir">← Précédent</span><span class="ttl">Modèle de contenu</span></a><a class="next" href="06-astro.html"><span class="dir">Suivant →</span><span class="ttl">Adaptation pour Astro</span></a></nav>
+</main>
+<footer><div class="wrap">BlogStarter — Documentation du process · Partie 05</div></footer></body></html>

@@ -1,0 +1,18 @@
+/* THÈME · arcade-cyan — cyan lumineux sur bleu nuit */
+:root {
+  --bg:#060a10; --bg-elev:#0a0f17; --surface-1:#0d131c; --surface-2:#121a26; --surface-3:#1a2534;
+  --border:#213040; --border-strong:#314658; --grid-line:rgba(34,211,238,.04);
+  --text:#eef6f9; --text-soft:#a4b6c2; --text-faint:#6b8190; --text-dim:#45586a;
+  --accent:#22d3ee; --accent-bright:#67e8f9; --accent-deep:#0891b2;
+  --accent-tint:rgba(34,211,238,.12); --accent-line:rgba(34,211,238,.30); --accent-glow:rgba(34,211,238,.32);
+  --grad-accent:linear-gradient(120deg,#67e8f9,#22d3ee 55%,#0891b2);
+  --on-accent:#05121a;
+  --success:#34d399; --success-tint:rgba(52,211,153,.13);
+  --warning:#ffb020; --warning-tint:rgba(255,176,32,.13);
+  --danger:#ff4d6d;  --danger-tint:rgba(255,77,109,.13);
+  --info:#818cf8;    --info-tint:rgba(129,140,248,.13);
+  --font-display:"Chakra Petch",system-ui,sans-serif;
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",monospace;
+  --notch:12px;
+}

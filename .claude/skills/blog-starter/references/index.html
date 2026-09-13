@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlogStarter — Documentation du process · Sommaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="doc.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="logo">B</span>
+    <span class="brand">BLOG<span>STARTER</span></span>
+    <span class="tag">DOCUMENTATION · BUILD PROCESS · v1</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kick">Documentation · Sommaire avancé</span>
+    <h1 style="margin-top:14px">Monter un blog gaming optimisé,<br><span class="v">de zéro au déploiement.</span></h1>
+    <p>Le process complet, dans l'ordre exact où il doit être suivi : commencer par le design system, valider les gabarits (article → listing → home), produire le contenu par agents spécialisés, adapter pour Astro, puis déployer sur Cloudflare. Chaque partie est documentée en profondeur, telle que nous l'avons réellement faite.</p>
+    <div class="meta-row">
+      <span class="chip">SKILL <b>Claude Code</b></span>
+      <span class="chip">STACK <b>Astro + Cloudflare</b></span>
+      <span class="chip">DATA <b>D1 · R2 · KV</b></span>
+      <span class="chip">MODÈLE <b>Prydwen / ad-arbitrage</b></span>
+      <span class="chip">PARTIES <b>12</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- LE SKILL -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><span class="kick">Skill Claude Code</span><h2>Un skill, pas seulement une doc</h2>
+      <p>BlogStarter est un <b>skill Claude Code</b> : vous l'installez, vous le lancez, il pose les questions (niche, catégories, couleurs, auteurs, sujets) puis déroule le process ci-dessous en validant chaque étape visuelle avec vous. Cette documentation est sa base de connaissance.</p></div>
+    <div class="cols3">
+      <div class="box"><div class="n">01</div><h4>Installer</h4><p>Copier le dossier du skill dans vos skills Claude Code :</p><pre class="cmd"><span class="k">cp</span> -R blog-starter ~/.claude/skills/</pre></div>
+      <div class="box"><div class="n">02</div><h4>Lancer</h4><p>Dans Claude Code, l'invoquer — ou le demander en langage naturel :</p><pre class="cmd"><span class="k">/blog-starter</span>
+<span class="c"># « crée-moi un blog sur [niche] »</span></pre></div>
+      <div class="box"><div class="n">03</div><h4>Répondre &amp; valider</h4><p>Le skill recueille votre config, génère le design system et les gabarits, produit le contenu par agents, puis prépare le déploiement — avec des portes de validation 🚦.</p></div>
+    </div>
+    <div class="note"><span class="l">Mode d'emploi complet</span>
+      <div class="legend"><span>Installation, questions d'intake, fichier <code>blog.config.json</code>, déroulé des 8 phases et statut des composants → <a href="00-introduction.html">Partie 00 · Prise en main →</a></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMENT LIRE -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><span class="kick">À lire d'abord</span><h2>Méthodologie &amp; principe directeur</h2>
+      <p>Trois idées gouvernent tout le reste. Les intérioriser évite 90 % des erreurs.</p></div>
+    <div class="cols3">
+      <div class="box"><div class="n">01</div><h4>Le design system d'abord</h4><p>On ne dessine pas des pages, on dessine un système. Il devient la <b>source de vérité unique</b> : toute page en découle, toute modif y passe d'abord.</p></div>
+      <div class="box"><div class="n">02</div><h4>L'ordre n'est pas négociable</h4><p>Design system → article → listing → home → contenu → Astro → déploiement. Sauter une étape, c'est reconstruire deux fois.</p></div>
+      <div class="box"><div class="n">03</div><h4>Le contenu est irremplaçable</h4><p>La technique rend rapide et scalable ; le vécu (on joue, on teste) rend défendable face à l'IA. Les deux ensemble = un actif durable.</p></div>
+    </div>
+    <div class="note"><span class="l">Légende</span>
+      <div class="legend"><span><b class="must">◆ Fondation</b> — bloquant, ne pas sauter</span><span><b>● Étape clé</b></span><span><b>○ Détail / bonne pratique</b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOMMAIRE -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><span class="kick">Sommaire avancé</span><h2>Les 12 parties du process</h2>
+      <p>Clique sur une partie pour lire sa documentation détaillée.</p></div>
+
+    <div class="part">
+      <a class="p-head" href="00-introduction.html"><div class="p-num">00</div><div class="p-title"><h3>Prise en main &amp; cadrage</h3><p>Installer et lancer le skill, la config à préparer, le modèle économique, la stack et les prérequis.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">0.1</div><div><div class="t">Objectif &amp; modèle économique <span class="prio must">◆</span></div><div class="d">Blog gaming monétisé (display/RSoC + affiliation + CPI), modèle Prydwen, logique d'ad-arbitrage (vitesse = marge par visiteur).</div></div></div>
+        <div class="item"><div class="id">0.2</div><div><div class="t">Vue d'ensemble de la stack</div><div class="d">Astro (rendu), Cloudflare Workers (edge), D1 (contenu), R2 (médias), KV (sessions).</div></div></div>
+        <div class="item"><div class="id">0.3</div><div><div class="t">Prérequis &amp; outils</div><div class="d">Node, npm, wrangler, gh CLI, un compte Cloudflare + GitHub, le domaine en .com.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="01-cadrage.html"><div class="p-num">01</div><div class="p-title"><h3>Cadrage éditorial</h3><p>Niche, marque, domaine, catégories.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">1.1</div><div><div class="t">Choisir la niche</div><div class="d">Guides de jeux live-service focalisés ; audience unique, autorité topique, défendabilité E-E-A-T.</div></div></div>
+        <div class="item"><div class="id">1.2</div><div><div class="t">Marque &amp; nom de domaine</div><div class="d">.com brandable (BlogStarter), vérification de disponibilité, cohérence avec la niche.</div></div></div>
+        <div class="item"><div class="id">1.3</div><div><div class="t">Définir les catégories <span class="prio must">◆</span></div><div class="d">Maximum 5 catégories (ici : Guides · News · Reviews · Setup). Elles structurent nav, silos SEO et contenu.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="02-design-system.html"><div class="p-num">02</div><div class="p-title"><h3>Le Design System — commencer par ça</h3><p>La fondation. Rien ne se construit avant qu'il soit validé.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">2.1</div><div><div class="t">Pourquoi démarrer par le design system <span class="prio must">◆</span></div><div class="d">Cohérence garantie, zéro dette de recopie, source de vérité unique. Le piège du HTML brut recopié page par page.</div></div></div>
+        <div class="item"><div class="id">2.2</div><div><div class="t">Concept &amp; direction artistique</div><div class="d">Un parti pris fort et assumé (« Command HUD » : dark, accent volt unique, formes angulaires). Éviter le générique.</div></div></div>
+        <div class="item"><div class="id">2.3</div><div><div class="t">Les tokens</div><div class="d">Couleurs (surfaces, accent signature, sémantiques), typographie, espacements, rayons, formes.</div></div></div>
+        <div class="item"><div class="id">2.4</div><div><div class="t">Les composants (inventaire priorisé)</div><div class="d">UI, gaming (tier list, cartes perso, stats), éditorial, monétisation, états/overlays. Priorités 🟢/🟡/⚪.</div></div></div>
+        <div class="item"><div class="id">2.5</div><div><div class="t">La page styleguide navigable</div><div class="d">Une vitrine unique de tous les tokens et composants, à faire valider avant d'aller plus loin.</div></div></div>
+        <div class="item"><div class="id">2.6</div><div><div class="t">Bonnes pratiques</div><div class="d">Discipline mono-accent, formes signature, lisibilité éditoriale, accessibilité, un seul CSS source.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="03-gabarits.html"><div class="p-num">03</div><div class="p-title"><h3>Valider les gabarits (dans l'ordre)</h3><p>Article → Listing → Home. Toujours à partir du design system.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">3.1</div><div><div class="t">Page article (single) <span class="prio must">◆</span></div><div class="d">Le cœur : lecture + monétisation. Audit UX/UI, module « at-a-glance », pub intégrée sans casser la lecture, E-E-A-T.</div></div></div>
+        <div class="item"><div class="id">3.2</div><div><div class="t">Page listing (archive)</div><div class="d">Un template réutilisable pour catégorie / tag / auteur. En-tête d'archive, grille, pub in-feed, pagination.</div></div></div>
+        <div class="item"><div class="id">3.3</div><div><div class="t">Page home</div><div class="d">Spotlight à la une, jeux couverts, dernières sections, sidebar tendances, newsletter.</div></div></div>
+        <div class="item"><div class="id">3.4</div><div><div class="t">La règle d'or</div><div class="d">Toute modification d'une page se fait <b>d'abord</b> dans le design system, puis se répercute.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="04-contenu.html"><div class="p-num">04</div><div class="p-title"><h3>Modèle de contenu</h3><p>Comment le contenu est structuré et stocké.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">4.1</div><div><div class="t">Markdown + frontmatter</div><div class="d">Un fichier par article, métadonnées normalisées (title, dek, category, game, cover, rating, tier…).</div></div></div>
+        <div class="item"><div class="id">4.2</div><div><div class="t">Convention d'images WordPress</div><div class="d">Chemin <code>wp-content/uploads/AAAA/MM/JJ/</code> pour la portabilité et des URLs stables.</div></div></div>
+        <div class="item"><div class="id">4.3</div><div><div class="t">Optimisation &amp; métadonnées <span class="prio must">◆</span></div><div class="d">Toute image optimisée (WebP/cwebp) et nettoyée de ses métadonnées avant stockage.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="05-agents.html"><div class="p-num">05</div><div class="p-title"><h3>Production par agents spécialisés</h3><p>Un expert rédacteur par catégorie + un chercheur d'images.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">5.1</div><div><div class="t">Pourquoi des agents experts par catégorie</div><div class="d">Le rédacteur de guides ≠ celui des news ≠ celui des reviews. Chacun spécialiste de son format.</div></div></div>
+        <div class="item"><div class="id">5.2</div><div><div class="t">Définir les agents</div><div class="d">guide-writer, news-writer, review-writer, photo-finder — rôle, outils, format de sortie, langue.</div></div></div>
+        <div class="item"><div class="id">5.3</div><div><div class="t">Orchestration</div><div class="d">Le chef d'orchestre répartit et lance les agents en parallèle ; les images via le chercheur dédié.</div></div></div>
+        <div class="item"><div class="id">5.4</div><div><div class="t">Créer les articles de test</div><div class="d">10 jeux × 3 catégories = 30 articles, pour valider gabarits et rendu avec du vrai contenu.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="06-astro.html"><div class="p-num">06</div><div class="p-title"><h3>Adaptation pour Astro</h3><p>Du HTML validé à l'app Astro sur Cloudflare.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">6.1</div><div><div class="t">Scaffold</div><div class="d">create astro + adapter @astrojs/cloudflare (SSR), config site &amp; bindings.</div></div></div>
+        <div class="item"><div class="id">6.2</div><div><div class="t">Componentiser le design system <span class="prio must">◆</span></div><div class="d">Le CSS validé est copié tel quel ; les maquettes deviennent des composants (rendu fidèle au pixel).</div></div></div>
+        <div class="item"><div class="id">6.3</div><div><div class="t">Couche données D1</div><div class="d">Schéma (categories, games, authors, articles, tags), Drizzle, migrations.</div></div></div>
+        <div class="item"><div class="id">6.4</div><div><div class="t">Import du contenu → D1</div><div class="d">Parser les .md, rendre le HTML, télécharger/optimiser les images, générer et appliquer le seed.</div></div></div>
+        <div class="item"><div class="id">6.5</div><div><div class="t">Routes SSR + cache edge</div><div class="d">home, /[category], /[category]/[slug] ; Cache-Control s-maxage.</div></div></div>
+        <div class="item"><div class="id">6.6</div><div><div class="t">Médias sur R2</div><div class="d">Créatives pub servies via une route /media depuis R2 ; covers en statique.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="07-seo-geo.html"><div class="p-num">07</div><div class="p-title"><h3>SEO &amp; GEO</h3><p>Être trouvable par Google ET cité par les IA.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">7.1</div><div><div class="t">SEO on-page</div><div class="d">title/meta/canonical/robots + Open Graph &amp; Twitter, dans le BaseLayout.</div></div></div>
+        <div class="item"><div class="id">7.2</div><div><div class="t">Données structurées (JSON-LD)</div><div class="d">Article/Review, BreadcrumbList, Organization, WebSite+SearchAction, Person.</div></div></div>
+        <div class="item"><div class="id">7.3</div><div><div class="t">Fichiers de crawl &amp; distribution</div><div class="d">sitemap.xml &amp; robots.txt (dynamiques depuis D1), ads.txt, llms.txt (GEO), RSS.</div></div></div>
+        <div class="item"><div class="id">7.4</div><div><div class="t">Performance &amp; Core Web Vitals</div><div class="d">Images dimensionnées (anti-CLS), zéro JS superflu, cache edge, polices self-hostées.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="08-monetisation.html"><div class="p-num">08</div><div class="p-title"><h3>Monétisation &amp; conformité</h3><p>Pensée dès le gabarit, pas rajoutée après.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">8.1</div><div><div class="t">Emplacements publicitaires</div><div class="d">Leaderboard, rectangle, in-feed, ancre — formats réservés (bon CLS).</div></div></div>
+        <div class="item"><div class="id">8.2</div><div><div class="t">Créatives &amp; ads.txt</div><div class="d">Créatives optimisées sur R2 ; ads.txt (requis AdSense) ; disclosure affiliation.</div></div></div>
+        <div class="item"><div class="id">8.3</div><div><div class="t">Consentement &amp; pages légales</div><div class="d">Bandeau cookies (RGPD/ePrivacy), mentions légales, confidentialité, cookies.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="09-deploiement.html"><div class="p-num">09</div><div class="p-title"><h3>Déploiement Cloudflare</h3><p>Tel que nous l'avons fait, étape par étape.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">9.1</div><div><div class="t">Connexion &amp; config adapter</div><div class="d">wrangler login ; imageService passthrough ; compatibility_date ; bindings.</div></div></div>
+        <div class="item"><div class="id">9.2</div><div><div class="t">D1 distant</div><div class="d">create → database_id → migrations --remote → seed --remote → vérifier.</div></div></div>
+        <div class="item"><div class="id">9.3</div><div><div class="t">R2 &amp; KV</div><div class="d">Créer le bucket + uploader les créatives (--remote) ; namespace KV pour les sessions.</div></div></div>
+        <div class="item"><div class="id">9.4</div><div><div class="t">Build &amp; deploy <span class="prio must">◆</span></div><div class="d">npm run build → wrangler deploy → URL workers.dev, bindings connectés.</div></div></div>
+        <div class="item"><div class="id">9.5</div><div><div class="t">Domaine &amp; post-déploiement</div><div class="d">Brancher le domaine (SSL auto), Search Console + sitemap, compléter ads.txt.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="10-versioning.html"><div class="p-num">10</div><div class="p-title"><h3>Versioning &amp; CI</h3><p>Sauvegarder et livrer en continu.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">10.1</div><div><div class="t">Repo privé GitHub</div><div class="d">.gitignore propre, init, commit, push vers un repo privé via gh CLI.</div></div></div>
+        <div class="item"><div class="id">10.2</div><div><div class="t">Déploiement continu (optionnel)</div><div class="d">Connecter le repo à Cloudflare pour un déploiement automatique à chaque git push.</div></div></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <a class="p-head" href="11-annexes.html"><div class="p-num">11</div><div class="p-title"><h3>Annexes</h3><p>Références rapides.</p></div><span class="p-open">Lire →</span></a>
+      <div class="p-body">
+        <div class="item"><div class="id">11.1</div><div><div class="t">Checklist récapitulative</div><div class="d">L'ordre à respecter, en une page, du cadrage au déploiement.</div></div></div>
+        <div class="item"><div class="id">11.2</div><div><div class="t">Pièges à éviter</div><div class="d">Les 8 pièges réels rencontrés + leur correctif : DS générique, <code>Astro.locals.runtime.env</code> supprimé, agents non reconnus en session, sips/Photoshop, prompt R2, imageService/KV, redémarrage dev, featured=titre.</div></div></div>
+        <div class="item"><div class="id">11.3</div><div><div class="t">Commandes &amp; arborescence</div><div class="d">Toutes les commandes wrangler/gh, et la structure de dossiers du projet.</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    BlogStarter — Documentation du process de création · v1<br>
+    12 parties · <a href="00-introduction.html">Commencer par l'introduction →</a>
+  </div>
+</footer>
+
+</body>
+</html>

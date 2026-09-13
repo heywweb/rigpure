@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://blogstarter.dev/schema/blog.config.schema.json",
+  "title": "BlogStarter config",
+  "description": "Configuration unique d'un blog BlogStarter. Recueillie à l'intake, validée, puis injectée dans le design system, les agents et le projet Astro.",
+  "type": "object",
+  "required": ["brand", "domain", "niche", "categories", "theme", "authors"],
+  "additionalProperties": false,
+  "properties": {
+    "brand": {
+      "type": "string",
+      "description": "Nom de marque affiché (logo, header, footer, meta).",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "domain": {
+      "type": "string",
+      "description": "Nom de domaine en production, sans protocole. Le .com est recommandé.",
+      "pattern": "^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,}$"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Angle éditorial précis et défendable (pas « le gaming » mais « guides de jeux live-service »).",
+      "minLength": 3
+    },
+    "language": {
+      "type": "string",
+      "description": "Langue du contenu, code ISO 639-1 (2 lettres).",
+      "pattern": "^[a-z]{2}$",
+      "default": "en"
+    },
+    "categories": {
+      "type": "array",
+      "description": "2 à 5 catégories maximum. Elles structurent la navigation, les silos SEO et le contenu.",
+      "items": { "type": "string", "minLength": 1, "maxLength": 24 },
+      "minItems": 2,
+      "maxItems": 5,
+      "uniqueItems": true
+    },
+    "theme": {
+      "type": "object",
+      "description": "Soit un preset de palette, soit un accent custom (hex) + mode.",
+      "oneOf": [
+        {
+          "required": ["preset"],
+          "additionalProperties": false,
+          "properties": {
+            "preset": {
+              "type": "string",
+              "enum": ["command-hud", "cyber-magenta", "arcade-cyan", "neutral-pro", "editorial-warm"]
+            }
+          }
+        },
+        {
+          "required": ["accent"],
+          "additionalProperties": false,
+          "properties": {
+            "accent": {
+              "type": "string",
+              "description": "Couleur d'accent unique, format hex 6 chiffres.",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "mode": {
+              "type": "string",
+              "enum": ["dark", "light"],
+              "default": "dark"
+            }
+          }
+        }
+      ]
+    },
+    "authors": {
+      "type": "array",
+      "description": "Une ou plusieurs personas auteur (crédibilité E-E-A-T).",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "bio": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "avatar": { "type": "string" }
+        }
+      }
+    },
+    "seeds": {
+      "type": "array",
+      "description": "Entités/sujets à couvrir pour amorcer le contenu (jeux, produits, thèmes).",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "modules": {
+      "type": "array",
+      "description": "Packs de niche optionnels (ex. « gaming » : tier lists, cartes perso, stats).",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "articlesPerCategory": {
+          "type": "integer",
+          "description": "Nombre d'articles produits par catégorie au premier jet.",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 3
+        }
+      }
+    },
+    "monetization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ads": { "type": "boolean", "default": true, "description": "Display / RSoC." },
+        "affiliate": { "type": "boolean", "default": false, "description": "Liens et comparatifs affiliés." },
+        "cpi": { "type": "boolean", "default": false, "description": "Offres jeux en coût par installation." }
+      }
+    }
+  }
+}

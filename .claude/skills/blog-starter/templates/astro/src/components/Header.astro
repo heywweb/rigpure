@@ -1,0 +1,32 @@
+---
+interface Props { active?: string }
+const { active = '' } = Astro.props;
+// {{categories}} — le skill régénère ce tableau depuis blog.config.json.categories
+// (un objet par catégorie : label affiché, href = /slug, key = slug). Défaut d'exemple :
+const nav = [
+  { label: 'Guides', href: '/guides', key: 'guides' },
+  { label: 'News', href: '/news', key: 'news' },
+  { label: 'Reviews', href: '/reviews', key: 'reviews' },
+  { label: 'Setup', href: '/setup', key: 'setup' },
+];
+---
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="#07080b" aria-hidden="true"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span>
+      <span class="logo-text"><b>{{brand}}</b></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      {nav.map((n) => (
+        <a href={n.href} class={active === n.key ? 'active' : ''} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <a href="/search" class="search-box" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>SEARCH</span>
+      </a>
+      <a href="#" class="btn btn-primary btn-sm">Subscribe</a>
+    </div>
+  </div>
+</header>

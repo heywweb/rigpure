@@ -1,0 +1,23 @@
+{
+  "brand": "RigPure",
+  "domain": "rigpure.com",
+  "niche": "PC gaming reviews, guides and news",
+  "language": "en",
+  "categories": ["Games", "Reviews", "Guides", "News"],
+  "theme": { "preset": "command-hud" },
+  "authors": [
+    { "name": "Alex", "bio": "PC gaming reviewer — plays and tests every title covered before writing." }
+  ],
+  "seeds": [
+    "NTE: Neverness to Everness",
+    "Arknights: Endfield",
+    "Once Human",
+    "Raid: Shadow Legends",
+    "Infinity Kingdom",
+    "Rise of Kingdoms",
+    "War Thunder"
+  ],
+  "modules": ["gaming"],
+  "content": { "articlesPerCategory": 2 },
+  "monetization": { "ads": true, "affiliate": true, "cpi": false }
+}

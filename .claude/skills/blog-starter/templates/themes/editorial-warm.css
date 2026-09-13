@@ -1,0 +1,21 @@
+/* THÈME · editorial-warm — thème CLAIR, accent terracotta (niches lifestyle/food/déco)
+   ⚠ Thème clair : base.css assume un fond sombre pour quelques effets (grille blueprint,
+   dégradés de vignettes .ph-*). Prévoir des ajustements composants pour un rendu clair parfait
+   (voir workstream E4 — cas limites). Utilisable, mais « expérimental ». */
+:root {
+  --bg:#faf7f2; --bg-elev:#fffdf9; --surface-1:#ffffff; --surface-2:#f4efe8; --surface-3:#ece4d8;
+  --border:#e4dccf; --border-strong:#d3c7b5; --grid-line:rgba(224,99,45,.05);
+  --text:#1c1a17; --text-soft:#4a4640; --text-faint:#7a7368; --text-dim:#a89f92;
+  --accent:#e0632d; --accent-bright:#f0834d; --accent-deep:#b84a1c;
+  --accent-tint:rgba(224,99,45,.10); --accent-line:rgba(224,99,45,.28); --accent-glow:rgba(224,99,45,.22);
+  --grad-accent:linear-gradient(120deg,#f0834d,#e0632d 55%,#b84a1c);
+  --on-accent:#ffffff;
+  --success:#2f9e6b; --success-tint:rgba(47,158,107,.12);
+  --warning:#c98a1e; --warning-tint:rgba(201,138,30,.12);
+  --danger:#d64550;  --danger-tint:rgba(214,69,80,.12);
+  --info:#3b82f6;    --info-tint:rgba(59,130,246,.12);
+  --font-display:"Fraunces",Georgia,serif;
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",monospace;
+  --notch:2px;
+}

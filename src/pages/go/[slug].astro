@@ -1,0 +1,13 @@
+---
+// Outbound redirect links: /go/<slug> -> external URL.
+// Add one entry per link you want to expose under a short, brandable path.
+const REDIRECTS: Record<string, string> = {
+  darkepoch: 'https://www.37games.com/official_website/index.html?name=mudeofficial&store=1&srtl=3284.0.0.0#/',
+};
+
+const { slug } = Astro.params;
+const target = slug ? REDIRECTS[slug] : undefined;
+
+if (!target) return Astro.rewrite('/404');
+return Astro.redirect(target, 302);
+---

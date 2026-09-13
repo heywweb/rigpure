@@ -1,0 +1,125 @@
+---
+import '../styles/styles-v2.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import { env } from 'cloudflare:workers';
+
+// Google Tag Manager — ID depuis les variables d'environnement (Cloudflare vars).
+// Injecté seulement s'il est renseigné (≠ placeholder) → aucun effet sinon.
+const GTM_ID = (env as any).GTM_ID as string | undefined;
+const gtmEnabled = !!GTM_ID && GTM_ID !== 'GTM-XXXXXXX';
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: string;
+  canonical?: string;
+  image?: string;
+  type?: string;
+  noindex?: boolean;
+  bodyStyle?: string;
+  articlePublished?: string;
+  articleModified?: string;
+  author?: string;
+}
+const {
+  title,
+  description = 'RigPure — PC gaming reviews, guides and news. Hands-on expertise you can trust.',
+  active = '',
+  canonical,
+  image,
+  type = 'website',
+  noindex = false,
+  bodyStyle,
+  articlePublished,
+  articleModified,
+  author,
+} = Astro.props;
+
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = image ? new URL(image, Astro.site).href : undefined;
+const siteHref = Astro.site?.href ?? 'https://rigpure.com/';
+
+// JSON-LD site (Organization + WebSite + SearchAction) — SEO/GEO
+const siteJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteHref}#org`,
+      name: 'RigPure',
+      url: siteHref,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteHref}logo.svg`,
+        width: 512,
+        height: 512,
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteHref}#website`,
+      name: 'RigPure',
+      url: siteHref,
+      publisher: { '@id': `${siteHref}#org` },
+      inLanguage: 'en',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${siteHref}search?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  {/* Google Consent Mode v2 — défaut refusé, mis à jour par la bannière (avant tout tag pub/analytics) */}
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      ad_storage: 'denied', analytics_storage: 'denied',
+      ad_user_data: 'denied', ad_personalization: 'denied', wait_for_update: 500,
+    });
+  </script>
+  {gtmEnabled && (
+    <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`} />
+  )}
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <!-- Open Graph -->
+  <meta property="og:type" content={type} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content="RigPure" />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+  {type === 'article' && articlePublished && <meta property="article:published_time" content={articlePublished} />}
+  {type === 'article' && articleModified && <meta property="article:modified_time" content={articleModified} />}
+  {type === 'article' && author && <meta property="article:author" content={author} />}
+  <meta name="theme-color" content="#07080b" />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(siteJsonLd)} />
+  <!-- Fonts (à self-host plus tard — Phase I) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <slot name="head" />
+</head>
+<body style={bodyStyle}>
+  {gtmEnabled && (
+    <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />
+  )}
+  <Header active={active} />
+  <slot />
+  <Footer />
+  <ConsentBanner />
+</body>
+</html>

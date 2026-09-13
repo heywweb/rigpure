@@ -1,0 +1,37 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"compatibility_date": "2026-08-25",
+	"compatibility_flags": ["global_fetch_strictly_public"],
+	"name": "{{slug}}",
+	"main": "@astrojs/cloudflare/entrypoints/server",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "{{slug}}-db",
+			"database_id": "<VOTRE_DATABASE_ID>",
+			"migrations_dir": "migrations"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "{{slug}}-media"
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "<VOTRE_KV_NAMESPACE_ID>"
+		}
+	],
+	"vars": {
+		"GTM_ID": "GTM-XXXXXXX"
+	}
+}

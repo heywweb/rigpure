@@ -1,0 +1,28 @@
+/* ============================================================
+   THÈME · command-hud (défaut) — volt sur quasi-noir, esprit HUD esport
+   Contrat de tokens d'un thème blog-starter (à charger APRÈS base.css) :
+   surfaces · texte · accent (+variantes) · sémantiques · on-accent · polices · notch
+   ============================================================ */
+:root {
+  /* surfaces */
+  --bg:#07080b; --bg-elev:#0b0d12; --surface-1:#0e1116; --surface-2:#141821; --surface-3:#1c212d;
+  --border:#232a38; --border-strong:#333c4f; --grid-line:rgba(198,255,51,.035);
+  /* texte */
+  --text:#f2f4f8; --text-soft:#a9b1c2; --text-faint:#6b7488; --text-dim:#454c5e;
+  /* accent (signature) */
+  --accent:#c6ff33; --accent-bright:#dcff77; --accent-deep:#9ad400;
+  --accent-tint:rgba(198,255,51,.11); --accent-line:rgba(198,255,51,.28); --accent-glow:rgba(198,255,51,.30);
+  --grad-accent:linear-gradient(120deg,#dcff77,#c6ff33 55%,#9ad400);
+  --on-accent:#07080b;
+  /* sémantiques */
+  --success:#34d399; --success-tint:rgba(52,211,153,.13);
+  --warning:#ffb020; --warning-tint:rgba(255,176,32,.13);
+  --danger:#ff4d6d;  --danger-tint:rgba(255,77,109,.13);
+  --info:#38bdf8;    --info-tint:rgba(56,189,248,.13);
+  /* polices */
+  --font-display:"Chakra Petch",system-ui,sans-serif;
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",monospace;
+  /* forme */
+  --notch:12px;
+}

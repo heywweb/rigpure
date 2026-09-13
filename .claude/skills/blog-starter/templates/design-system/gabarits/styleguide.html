@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System · BlogStarter — Command HUD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles-v2.css">
+<style>
+  /* Styles propres au styleguide */
+  .ds-hero { position: relative; padding: var(--s8) 0 var(--s7); border-bottom: 1px solid var(--border); overflow: hidden; }
+  .ds-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(700px 340px at 82% 8%, var(--volt-tint), transparent 65%); }
+  .ds-hero .sys-line { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); letter-spacing: .1em; margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .ds-hero .sys-line b { color: var(--volt); font-weight: 600; }
+  .ds-hero h1 { font-size: var(--fs-4xl); max-width: 16ch; }
+  .ds-hero h1 .volt { color: var(--volt); text-shadow: 0 0 30px var(--volt-glow); }
+  .ds-hero p { font-size: var(--fs-lg); color: var(--text-soft); max-width: 62ch; margin: 18px 0 0; line-height: 1.5; }
+
+  .sg-section { padding: var(--s7) 0; border-bottom: 1px solid var(--border); scroll-margin-top: var(--header-h); }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: var(--s6); flex-wrap: wrap; }
+  .sec-head .h-left h2 { font-size: var(--fs-2xl); margin-top: 8px; text-transform: uppercase; }
+  .sec-head .h-left p { color: var(--text-faint); font-size: 14.5px; margin: 8px 0 0; max-width: 66ch; }
+  .sec-head .sec-id { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: .1em; }
+
+  .ds-grid { display: grid; gap: 16px; }
+  .cols-2 { grid-template-columns: repeat(2, 1fr); } .cols-3 { grid-template-columns: repeat(3, 1fr); } .cols-4 { grid-template-columns: repeat(4, 1fr); } .cols-5 { grid-template-columns: repeat(5, 1fr); }
+  @media (max-width: 820px) { .cols-3, .cols-4, .cols-5 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .cols-2, .cols-3, .cols-4, .cols-5 { grid-template-columns: 1fr; } }
+
+  .subhead { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); margin: var(--s6) 0 var(--s4); display: flex; align-items: center; gap: 10px; }
+  .subhead::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  .subhead:first-of-type { margin-top: 0; }
+
+  .swatch { border: 1px solid var(--border); background: var(--surface-1); }
+  .swatch .chip { height: 68px; border-bottom: 1px solid var(--border); }
+  .swatch .info { padding: 9px 11px; font-family: var(--font-mono); font-size: 11px; }
+  .swatch .info .nm { color: var(--text); display: block; } .swatch .info .hex { color: var(--text-faint); }
+
+  .type-row { display: flex; align-items: baseline; gap: 22px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .type-row .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); width: 120px; flex: none; letter-spacing: .04em; }
+
+  .demo-box { background: var(--surface-1); border: 1px solid var(--border); padding: var(--s5); }
+  .flex-wrap { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .shape-demo { display: flex; gap: 20px; flex-wrap: wrap; }
+  .shape-demo .cell { text-align: center; } .shape-demo .cell .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 10px; }
+  .radius-demo { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-end; }
+  .radius-demo .rb { width: 74px; height: 74px; background: var(--surface-2); border: 1px solid var(--border-strong); display: grid; place-items: end center; padding-bottom: 7px; font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); }
+  .hud-panel-inner { padding: 22px; }
+  .note { font-size: 13px; color: var(--text-faint); font-family: var(--font-mono); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container">
+    <a href="#top" class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="#07080b"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span>
+      <span class="logo-text"><b>BLOG</b><span>STARTER</span></span>
+    </a>
+    <nav class="main-nav">
+      <a href="#foundations" class="active">Fondations</a>
+      <a href="#navigation">Navigation</a>
+      <a href="#gaming">Gaming</a>
+      <a href="#editorial">Éditorial</a>
+      <a href="#money">Monétisation</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>RECHERCHER</span>
+      </div>
+      <a href="#" class="btn btn-primary btn-sm">S'abonner</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="ds-hero" id="top">
+  <div class="container">
+    <div class="sys-line"><span>SYS.DESIGN // <b>BLOGSTARTER</b></span><span>THEME <b>COMMAND HUD</b></span><span>VER <b>2.1</b></span><span>STATUS <b>REVIEW</b></span></div>
+    <h1>Design system <span class="volt">BlogStarter.</span></h1>
+    <p>La bibliothèque complète des composants du blog — fondations, navigation, composants gaming, éditorial, monétisation et états. Tout ce dont on a besoin pour construire, réuni sur une page à valider.</p>
+  </div>
+</section>
+
+<div class="sg-layout">
+  <!-- SIDEBAR NAV -->
+  <aside class="sg-nav">
+    <div class="sg-title">Fondations</div>
+    <a href="#colors">Couleurs</a>
+    <a href="#type">Typographie</a>
+    <a href="#shapes">Formes & profondeur</a>
+    <a href="#elevation">Élévation & motion</a>
+    <a href="#icons">Iconographie</a>
+    <a href="#grid">Grille & breakpoints</a>
+    <div class="sg-title">Navigation</div>
+    <a href="#header">Header & nav</a>
+    <a href="#megamenu">Méga-menu</a>
+    <a href="#mobilenav">Nav mobile</a>
+    <a href="#search">Recherche</a>
+    <a href="#announce">Barre d'annonce</a>
+    <a href="#progress">Progression & retour-haut</a>
+    <div class="sg-title">Accueil & hubs</div>
+    <a href="#spotlight">Spotlight / à la une</a>
+    <a href="#sectionhead">En-tête de section</a>
+    <a href="#hub">Hub de jeu</a>
+    <a href="#trending">Trending</a>
+    <a href="#gamecards">Game cards</a>
+    <a href="#newsletter">Newsletter</a>
+    <div class="sg-title">Composants UI</div>
+    <a href="#buttons">Boutons</a>
+    <a href="#badges">Badges / tags / tiers</a>
+    <a href="#stats">Jauges & note</a>
+    <a href="#cards">Cartes article</a>
+    <a href="#forms">Formulaires</a>
+    <a href="#filters">Filtres & tri</a>
+    <a href="#tabs">Onglets</a>
+    <a href="#table">Table & pagination</a>
+    <div class="sg-title">Gaming</div>
+    <a href="#tierlist">Tier list</a>
+    <a href="#charcard">Carte personnage</a>
+    <a href="#loadout">Build / loadout</a>
+    <a href="#proscons">Pour / contre</a>
+    <a href="#keyfacts">Infos-clés</a>
+    <a href="#patch">Patch notes</a>
+    <a href="#pcreq">Config PC</a>
+    <a href="#countdown">Countdown & timeline</a>
+    <div class="sg-title">Éditorial</div>
+    <a href="#prose">Prose</a>
+    <a href="#verdict">Verdict / TL;DR</a>
+    <a href="#summary">Résumé at-a-glance</a>
+    <a href="#faq">FAQ</a>
+    <a href="#callouts">Callouts</a>
+    <a href="#editorial-blocks">Sommaire · auteur · sources</a>
+    <a href="#share">Partage & vidéo</a>
+    <div class="sg-title">Monétisation</div>
+    <a href="#ads">Encarts pub</a>
+    <a href="#buybox">Buy box & comparatif</a>
+    <div class="sg-title">États & overlays</div>
+    <a href="#cookie">Cookie & disclosure</a>
+    <a href="#overlays">Modale · toast · tooltip</a>
+    <a href="#states">Skeleton · empty · 404</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="sg-main">
+
+  <!-- ===================== FONDATIONS ===================== -->
+  <span id="foundations"></span>
+
+  <!-- COULEURS -->
+  <section class="sg-section" id="colors">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Fondations</span><h2>Couleurs</h2><p>Palette dark froide + un seul accent signature, le <strong style="color:var(--volt)">volt</strong>. Les sémantiques servent le statut, pas la marque.</p></div><span class="sec-id">SYS.01</span></div>
+    <div class="subhead">Signature · Volt</div>
+    <div class="ds-grid cols-4">
+      <div class="swatch"><div class="chip" style="background:var(--volt)"></div><div class="info"><span class="nm">volt</span><span class="hex">#03A9F4</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--volt-bright)"></div><div class="info"><span class="nm">volt-bright</span><span class="hex">#4fc3f7</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--volt-deep)"></div><div class="info"><span class="nm">volt-deep</span><span class="hex">#0288d1</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--grad-volt)"></div><div class="info"><span class="nm">grad-volt</span><span class="hex">dégradé</span></div></div>
+    </div>
+    <div class="subhead">Surfaces</div>
+    <div class="ds-grid cols-4">
+      <div class="swatch"><div class="chip" style="background:var(--bg)"></div><div class="info"><span class="nm">bg</span><span class="hex">#07080b</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--surface-1)"></div><div class="info"><span class="nm">surface-1</span><span class="hex">#0e1116</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--surface-2)"></div><div class="info"><span class="nm">surface-2</span><span class="hex">#141821</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--surface-3)"></div><div class="info"><span class="nm">surface-3</span><span class="hex">#1c212d</span></div></div>
+    </div>
+    <div class="subhead">Sémantiques & tiers</div>
+    <div class="ds-grid cols-5">
+      <div class="swatch"><div class="chip" style="background:var(--success)"></div><div class="info"><span class="nm">success</span><span class="hex">#34d399</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--warning)"></div><div class="info"><span class="nm">warning</span><span class="hex">#ffb020</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--danger)"></div><div class="info"><span class="nm">danger</span><span class="hex">#ff4d6d</span></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--info)"></div><div class="info"><span class="nm">info</span><span class="hex">#38bdf8</span></div></div>
+      <div class="swatch"><div class="chip" style="background:linear-gradient(90deg,var(--tier-s),var(--tier-a),var(--tier-b),var(--tier-c),var(--tier-d))"></div><div class="info"><span class="nm">tiers S→D</span><span class="hex">échelle</span></div></div>
+    </div>
+  </section>
+
+  <!-- TYPO -->
+  <section class="sg-section" id="type">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Fondations</span><h2>Typographie</h2><p><strong style="color:#fff">Chakra Petch</strong> (titres, techy) · <strong style="color:#fff">Inter</strong> (lecture) · <strong style="color:#fff">JetBrains Mono</strong> (labels système).</p></div><span class="sec-id">SYS.02</span></div>
+    <div class="demo-box">
+      <div class="type-row"><span class="lbl">4XL · DISPLAY</span><span style="font-family:var(--font-display);font-weight:700;font-size:var(--fs-4xl);">DOMINE LE LADDER</span></div>
+      <div class="type-row"><span class="lbl">2XL · DISPLAY</span><span style="font-family:var(--font-display);font-weight:700;font-size:var(--fs-2xl);text-transform:uppercase;">Titre de section</span></div>
+      <div class="type-row"><span class="lbl">XL · DISPLAY</span><span style="font-family:var(--font-display);font-weight:600;font-size:var(--fs-xl);">Sous-titre H3</span></div>
+      <div class="type-row"><span class="lbl">MD · BODY</span><span style="font-size:var(--fs-md);color:var(--text-soft)">Corps de texte — lecture confortable pour de longues sessions de guide.</span></div>
+      <div class="type-row"><span class="lbl">SM · BODY</span><span style="font-size:var(--fs-sm);color:var(--text-faint)">Texte secondaire, légendes et métadonnées.</span></div>
+      <div class="type-row" style="border:none"><span class="lbl">XS · MONO</span><span class="kicker">SYS.LABEL // MONOSPACE</span></div>
+    </div>
+  </section>
+
+  <!-- FORMES -->
+  <section class="sg-section" id="shapes">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Fondations</span><h2>Formes & profondeur</h2><p>Le langage visuel : coins entaillés (notch), crochets de viseur, rayons quasi nuls, grille blueprint.</p></div><span class="sec-id">SYS.03</span></div>
+    <div class="demo-box" style="margin-bottom:24px"><div class="shape-demo">
+      <div class="cell"><div class="hud" style="width:150px"><div class="hud-panel-inner" style="height:92px;display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-soft)">NOTCH</div></div><div class="lbl">.hud</div></div>
+      <div class="cell"><div class="hud accent-full" style="width:150px"><div class="hud-panel-inner" style="height:92px;display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-soft)">NOTCH · volt</div></div><div class="lbl">.hud.accent-full</div></div>
+      <div class="cell"><div class="brackets" style="width:150px;height:94px;background:var(--surface-2);border:1px solid var(--border);display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-soft)">VISEUR</div><div class="lbl">.brackets</div></div>
+    </div></div>
+    <div class="subhead">Rayons</div>
+    <div class="demo-box"><div class="radius-demo">
+      <div class="rb" style="border-radius:var(--r-sm)">sm·2</div><div class="rb" style="border-radius:var(--r-md)">md·4</div><div class="rb" style="border-radius:var(--r-lg)">lg·6</div><div class="rb" style="border-radius:var(--r-full);width:74px">full</div>
+    </div></div>
+  </section>
+
+  <!-- ÉLÉVATION & MOTION -->
+  <section class="sg-section" id="elevation">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Fondations</span><h2>Élévation & motion</h2><p>Ombres pour hiérarchiser overlays et cartes au survol. Transitions courtes (120–180 ms), jamais tape-à-l'œil.</p></div><span class="sec-id">SYS.04</span></div>
+    <div class="demo-box"><div class="elev-demo">
+      <div class="el">shadow-none</div><div class="el md">shadow-md</div><div class="el lg">shadow-lg</div>
+    </div><p class="note">Motion : hover cartes = translateY(-4px) · focus = ring volt-tint · durées 120/150/180 ms · easing ease.</p></div>
+  </section>
+
+  <!-- ICONOGRAPHIE -->
+  <section class="sg-section" id="icons">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Fondations</span><h2>Iconographie</h2><p>Style trait (stroke 2px), coins nets. Cohérent avec le HUD. Exemples génériques ci-dessous.</p></div><span class="sec-id">SYS.05</span></div>
+    <div class="demo-box"><div class="icon-grid">
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 6H21l-5 4 2 7-6-4-6 4 2-7-5-4h6.5z"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l6 6L20 6"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14m0 0l-4-4m4 4l4-4M4 21h16"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="ic-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20"/></svg></div>
+    </div></div>
+  </section>
+
+  <!-- GRILLE -->
+  <section class="sg-section" id="grid">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Fondations</span><h2>Grille & breakpoints</h2><p>Conteneur max 1200 px, gouttières fluides. Trois points de rupture principaux.</p></div><span class="sec-id">SYS.06</span></div>
+    <div class="demo-box"><table class="data-table bp-table">
+      <thead><tr><th>Breakpoint</th><th>Largeur</th><th>Usage</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mobile</strong></td><td>&lt; 560px</td><td>1 colonne, nav en drawer</td><td><div class="bar" style="width:30%"></div></td></tr>
+        <tr><td><strong>Tablette</strong></td><td>560–940px</td><td>2 colonnes, sidebar masquée</td><td><div class="bar" style="width:60%"></div></td></tr>
+        <tr><td><strong>Desktop</strong></td><td>&gt; 940px</td><td>Grille complète, sidebar sticky</td><td><div class="bar" style="width:100%"></div></td></tr>
+      </tbody>
+    </table></div>
+    <div class="subhead">Utilitaire <code style="font-family:var(--font-mono);color:var(--volt)">.grid.cols-N</code></div>
+    <div class="grid cols-4">
+      <div style="background:var(--surface-2);border:1px solid var(--border);height:56px;display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-faint)">col</div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);height:56px;display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-faint)">col</div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);height:56px;display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-faint)">col</div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);height:56px;display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-faint)">col</div>
+    </div>
+  </section>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <span id="navigation"></span>
+
+  <!-- HEADER -->
+  <section class="sg-section" id="header">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Navigation</span><h2>Header & nav</h2><p>Barre sticky avec logo BlogStarter, nav en capitales mono, recherche et CTA.</p></div><span class="sec-id">SYS.07</span></div>
+    <div class="demo-box" style="padding:0;overflow:hidden">
+      <div style="position:relative"><header class="site-header" style="position:static">
+        <div class="container">
+          <a href="#" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="#07080b"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span><span class="logo-text"><b>BLOG</b><span>STARTER</span></span></a>
+          <nav class="main-nav"><a href="#" class="active">Guides</a><a href="#">News</a><a href="#">Reviews</a><a href="#">Setup</a></nav>
+          <div class="header-actions"><div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><span>RECHERCHER</span></div><a href="#" class="btn btn-primary btn-sm">S'abonner</a></div>
+        </div>
+      </header></div>
+    </div>
+  </section>
+
+  <!-- MÉGA-MENU -->
+  <section class="sg-section" id="megamenu">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Navigation</span><h2>Méga-menu</h2><p>Le hub d'un site de guides : jeux couverts + catégories, ouvert au survol d'un item de nav.</p></div><span class="sec-id">SYS.08</span></div>
+    <div class="megamenu"><div class="mm-grid">
+      <div class="mm-col"><h5>Jeux</h5>
+        <a class="mm-item"><span class="ico">E</span>Eclipse Online</a><a class="mm-item"><span class="ico">A</span>Aetheria</a><a class="mm-item"><span class="ico">V</span>Vanguard TD</a></div>
+      <div class="mm-col"><h5>Catégories</h5>
+        <a class="mm-item"><span class="ico">G</span>Guides</a><a class="mm-item"><span class="ico">N</span>News</a><a class="mm-item"><span class="ico">R</span>Reviews</a></div>
+      <div class="mm-col"><h5>Setup</h5>
+        <a class="mm-item"><span class="ico">P</span>Configs PC</a><a class="mm-item"><span class="ico">C</span>Comparatifs</a><a class="mm-item"><span class="ico">S</span>Périphériques</a></div>
+    </div></div>
+  </section>
+
+  <!-- NAV MOBILE -->
+  <section class="sg-section" id="mobilenav">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Navigation</span><h2>Nav mobile</h2><p>Drawer plein écran déclenché par le burger. Aperçu contextuel ci-dessous.</p></div><span class="sec-id">SYS.09</span></div>
+    <div class="preview-frame" style="min-height:340px"><span class="pf-label">PREVIEW // MOBILE</span>
+      <div class="scrim"></div>
+      <div class="drawer">
+        <div class="d-head"><a href="#" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="#07080b"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span><span class="logo-text"><b>BLOG</b><span>STARTER</span></span></a><button class="announce-bar-close" style="background:none;border:none;color:var(--text-faint);font-size:20px;cursor:pointer">✕</button></div>
+        <nav><a class="active">Guides <span class="chev">›</span></a><a>Tier Lists <span class="chev">›</span></a><a>Builds <span class="chev">›</span></a><a>News <span class="chev">›</span></a><a>Setup <span class="chev">›</span></a></nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECHERCHE -->
+  <section class="sg-section" id="search">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Navigation</span><h2>Modale de recherche</h2><p>Recherche instantanée avec résultats groupés par type. Ouverte au clic ou raccourci clavier.</p></div><span class="sec-id">SYS.10</span></div>
+    <div class="preview-frame" style="min-height:320px"><span class="pf-label">PREVIEW // SEARCH</span>
+      <div class="scrim"></div>
+      <div class="search-modal">
+        <div class="sm-input"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--volt)" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input value="warden build" readonly><span class="kbd">ESC</span></div>
+        <div class="sm-results">
+          <div class="sm-cat">Builds</div>
+          <a class="sm-res"><span class="badge">Build</span>Build Warden DPS — end-game</a>
+          <a class="sm-res"><span class="badge">Build</span>Build Warden Tank — survie max</a>
+          <div class="sm-cat">Guides</div>
+          <a class="sm-res"><span class="badge success">Guide</span>Progression Warden 1–70</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRE D'ANNONCE -->
+  <section class="sg-section" id="announce">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Navigation</span><h2>Barre d'annonce</h2><p>Bandeau haut de page pour un patch, un event ou une bannière limitée.</p></div><span class="sec-id">SYS.11</span></div>
+    <div class="announce-bar" style="border-top:1px solid var(--volt-line)"><div class="container"><div class="inner"><span class="pill">Patch 3.4</span><span>Nouvelle tier list disponible — le méta a bougé.</span><a href="#">Voir →</a><button class="close">✕</button></div></div></div>
+  </section>
+
+  <!-- PROGRESSION & RETOUR HAUT -->
+  <section class="sg-section" id="progress">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Navigation</span><h2>Progression & retour-haut</h2><p>Barre de progression de lecture (sous le header) et bouton retour-haut flottant.</p></div><span class="sec-id">SYS.12</span></div>
+    <div class="ds-grid cols-2">
+      <div class="demo-box"><div class="subhead" style="margin-top:0">Progression de lecture</div><div class="reading-progress"><span style="width:62%"></span></div></div>
+      <div class="demo-box" style="display:flex;align-items:center;gap:16px"><div class="to-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div><span class="note" style="margin:0">Bouton retour-haut (apparaît au scroll)</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== ACCUEIL & HUBS ===================== -->
+  <span id="home"></span>
+
+  <!-- SPOTLIGHT -->
+  <section class="sg-section" id="spotlight">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Accueil & hubs</span><h2>Spotlight / à la une</h2><p>Le hero d'accueil : un article vedette + une pile d'articles secondaires.</p></div><span class="sec-id">SYS.13</span></div>
+    <div class="spotlight">
+      <article class="feature"><div class="bg ph-img ph-2"></div><span class="badge info" style="align-self:flex-start">Tier List</span><h2>Tier list des personnages — Saison 5</h2><p>Le classement complet après le patch 3.4 : qui domine le méta ce mois-ci.</p><a href="#" class="btn btn-primary btn-sm" style="align-self:flex-start">Lire →</a></article>
+      <div class="side">
+        <a class="mini"><div class="thumb ph-img ph-1"></div><div><h4>Build Warden DPS end-game</h4><div class="m-meta">BUILD · 9 MIN</div></div></a>
+        <a class="mini"><div class="thumb ph-img ph-3"></div><div><h4>Farmer efficacement les ressources</h4><div class="m-meta">GUIDE · 7 MIN</div></div></a>
+        <a class="mini"><div class="thumb ph-img ph-4"></div><div><h4>Quelle config PC pour 144 fps ?</h4><div class="m-meta">SETUP · 10 MIN</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EN-TÊTE DE SECTION -->
+  <section class="sg-section" id="sectionhead">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Accueil & hubs</span><h2>En-tête de section</h2><p>Titre de bloc de listing avec accent volt et lien « tout voir ».</p></div><span class="sec-id">SYS.14</span></div>
+    <div class="demo-box"><div class="section-head" style="margin-bottom:0;padding-bottom:0;border:none"><h2>Derniers guides</h2><a href="#" class="see-all">Tout voir →</a></div></div>
+  </section>
+
+  <!-- HUB -->
+  <section class="sg-section" id="hub">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Accueil & hubs</span><h2>Hub de jeu / catégorie</h2><p>En-tête d'une page de jeu : cover, description et compteurs.</p></div><span class="sec-id">SYS.15</span></div>
+    <div class="hub-header"><div class="bg ph-img ph-3"></div><span class="badge" style="align-self:flex-start">Jeu couvert</span><h1 class="h-title">Eclipse Online</h1><p class="h-desc">Tous nos guides, builds et tier lists pour dominer le méta d'Eclipse Online, mis à jour à chaque patch.</p><div class="h-stats"><div class="hs"><b>128</b><span>Guides</span></div><div class="hs"><b>42</b><span>Builds</span></div><div class="hs"><b>3.4</b><span>Patch</span></div></div></div>
+  </section>
+
+  <!-- TRENDING -->
+  <section class="sg-section" id="trending">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Accueil & hubs</span><h2>Trending</h2><p>Liste numérotée des contenus les plus lus — les 3 premiers en volt.</p></div><span class="sec-id">SYS.16</span></div>
+    <div class="demo-box" style="max-width:560px"><div class="trending">
+      <div class="tr-item"><span class="rank">1</span><div><h4>Tier list des personnages S5</h4><div class="t-meta">12.4K VUES</div></div></div>
+      <div class="tr-item"><span class="rank">2</span><div><h4>Build Warden DPS end-game</h4><div class="t-meta">8.1K VUES</div></div></div>
+      <div class="tr-item"><span class="rank">3</span><div><h4>Guide de farm optimisé</h4><div class="t-meta">6.7K VUES</div></div></div>
+      <div class="tr-item" style="border:none"><span class="rank">4</span><div><h4>Config PC 144 fps par budget</h4><div class="t-meta">5.2K VUES</div></div></div>
+    </div></div>
+  </section>
+
+  <!-- GAME CARDS -->
+  <section class="sg-section" id="gamecards">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Accueil & hubs</span><h2>Grille de jeux</h2><p>Sélecteur de jeux couverts — format poster vertical.</p></div><span class="sec-id">SYS.17</span></div>
+    <div class="ds-grid cols-4">
+      <a class="game-card"><div class="bg ph-img ph-1"></div><div><span class="g-name">Eclipse Online</span><span class="g-count">128 guides</span></div></a>
+      <a class="game-card"><div class="bg ph-img ph-2"></div><div><span class="g-name">Aetheria</span><span class="g-count">94 guides</span></div></a>
+      <a class="game-card"><div class="bg ph-img ph-3"></div><div><span class="g-name">Vanguard TD</span><span class="g-count">67 guides</span></div></a>
+      <a class="game-card"><div class="bg ph-img ph-4"></div><div><span class="g-name">Nova Rift</span><span class="g-count">51 guides</span></div></a>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="sg-section" id="newsletter">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Accueil & hubs</span><h2>Newsletter</h2><p>Capture email — rétention et audience directe, hors dépendance Google.</p></div><span class="sec-id">SYS.18</span></div>
+    <div class="newsletter"><h3>Ne rate aucun patch</h3><p>Les tier lists et builds à jour, directement dans ta boîte mail. Zéro spam.</p><form class="nl-form" onsubmit="return false"><input type="email" placeholder="ton@email.com"><button class="btn btn-primary">OK</button></form></div>
+  </section>
+
+  <!-- ===================== COMPOSANTS UI ===================== -->
+
+  <!-- BOUTONS -->
+  <section class="sg-section" id="buttons">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Boutons</h2><p>Coins entaillés, typo display capitales. 3 variantes × 3 tailles.</p></div><span class="sec-id">SYS.19</span></div>
+    <div class="demo-box">
+      <div class="flex-wrap" style="margin-bottom:16px"><button class="btn btn-primary">Lire le guide</button><button class="btn btn-secondary">Voir la tier list</button><button class="btn btn-ghost">En savoir plus →</button></div>
+      <div class="flex-wrap"><button class="btn btn-primary btn-lg">Grand</button><button class="btn btn-primary">Moyen</button><button class="btn btn-primary btn-sm">Petit</button></div>
+    </div>
+  </section>
+
+  <!-- BADGES -->
+  <section class="sg-section" id="badges">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Badges, tags & tiers</h2><p>Catégorie, statut à points lumineux, tags, et l'échelle tier S→D.</p></div><span class="sec-id">SYS.20</span></div>
+    <div class="demo-box">
+      <div class="subhead" style="margin-top:0">Catégories & statuts</div>
+      <div class="flex-wrap" style="margin-bottom:20px"><span class="badge">Guide</span><span class="badge info">Build</span><span class="badge success"><span class="dot"></span>À jour · 3.4</span><span class="badge warning">Méta évolutive</span><span class="badge danger"><span class="dot"></span>Nerf entrant</span></div>
+      <div class="subhead">Tags</div>
+      <div class="flex-wrap" style="margin-bottom:20px"><a class="tag">DPS</a><a class="tag">end-game</a><a class="tag">f2p-friendly</a><a class="tag">PvP</a></div>
+      <div class="subhead">Échelle tier</div>
+      <div class="flex-wrap"><span class="tier s">S</span><span class="tier a">A</span><span class="tier b">B</span><span class="tier c">C</span><span class="tier d">D</span></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="sg-section" id="stats">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI · Data</span><h2>Jauges & note</h2><p>Visualiser des stats d'un coup d'œil — le cœur d'un site de guides.</p></div><span class="sec-id">SYS.21</span></div>
+    <div class="ds-grid cols-2">
+      <div class="demo-box" style="display:flex;flex-direction:column;gap:16px">
+        <div class="stat"><div class="stat-top"><span class="stat-name">Dégâts</span><span class="stat-val">94</span></div><div class="meter"><span style="width:94%"></span></div></div>
+        <div class="stat"><div class="stat-top"><span class="stat-name">Survie</span><span class="stat-val">71</span></div><div class="meter warning"><span style="width:71%"></span></div></div>
+        <div class="stat"><div class="stat-top"><span class="stat-name">Mobilité</span><span class="stat-val">58</span></div><div class="meter"><span style="width:58%"></span></div></div>
+        <div class="stat"><div class="stat-top"><span class="stat-name">Difficulté</span><span class="stat-val">32</span></div><div class="meter danger"><span style="width:32%"></span></div></div>
+      </div>
+      <div class="demo-box" style="display:flex;flex-direction:column;justify-content:center;gap:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:var(--font-mono);font-size:12px;color:var(--text-faint);text-transform:uppercase">Note globale</span><span class="rating"><span class="score">9.2</span><span class="over">/ 10</span></span></div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:var(--font-mono);font-size:12px;color:var(--text-faint);text-transform:uppercase">Placement méta</span><span class="tier s">S</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTES -->
+  <section class="sg-section" id="cards">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Cartes article</h2><p>La brique de listing. Coin entaillé, index technique, méta mono.</p></div><span class="sec-id">SYS.22</span></div>
+    <div class="ds-grid cols-3">
+      <article class="card"><div class="thumb"><div class="ph-img ph-2">Tier List</div><span class="badge info cat">Tier List</span></div><div class="body"><span class="idx">// 001</span><h3>Tier list des personnages — S5</h3><p class="excerpt">Le classement complet après le patch 3.4.</p><div class="meta"><span>12 MIN</span><span class="sep">·</span><span>MàJ HIER</span></div></div></article>
+      <article class="card"><div class="thumb"><div class="ph-img ph-1">Build</div><span class="badge cat">Build</span></div><div class="body"><span class="idx">// 002</span><h3>Build Warden DPS end-game</h3><p class="excerpt">Stuff, talents et rotation optimale.</p><div class="meta"><span>9 MIN</span><span class="sep">·</span><span>2.3K VUES</span></div></div></article>
+      <article class="card"><div class="thumb"><div class="ph-img ph-3">Guide</div><span class="badge success cat">Guide</span></div><div class="body"><span class="idx">// 003</span><h3>Farmer efficacement</h3><p class="excerpt">Les meilleures routes de farm.</p><div class="meta"><span>7 MIN</span><span class="sep">·</span><span>DÉBUTANT</span></div></div></article>
+    </div>
+  </section>
+
+  <!-- FORMULAIRES -->
+  <section class="sg-section" id="forms">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Formulaires</h2><p>Champs, sélecteurs et contrôles avec états focus/erreur — coins entaillés cohérents.</p></div><span class="sec-id">SYS.23</span></div>
+    <div class="ds-grid cols-2">
+      <div class="demo-box">
+        <div class="field"><label>Pseudo</label><input class="input" placeholder="Ton pseudo en jeu"></div>
+        <div class="field"><label>Jeu</label><select class="select"><option>Eclipse Online</option><option>Aetheria</option></select></div>
+        <div class="field error"><label>Email</label><input class="input" value="email-invalide"><span class="err-msg">// Adresse email invalide</span></div>
+        <div class="field"><label>Message</label><textarea class="textarea" placeholder="Ton retour…"></textarea></div>
+      </div>
+      <div class="demo-box" style="display:flex;flex-direction:column;gap:18px">
+        <div class="subhead" style="margin:0">Contrôles</div>
+        <label class="check"><input type="checkbox" checked> Recevoir les alertes de patch</label>
+        <label class="check"><input type="checkbox"> S'abonner à la newsletter</label>
+        <label class="check"><input type="radio" name="r" checked> Guides PvE</label>
+        <label class="check"><input type="radio" name="r"> Guides PvP</label>
+        <label class="toggle"><input type="checkbox" checked> Mode sombre</label>
+        <label class="toggle"><input type="checkbox"> Notifications</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTRES -->
+  <section class="sg-section" id="filters">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Filtres & tri</h2><p>Barre de filtres pour archives et tier lists.</p></div><span class="sec-id">SYS.24</span></div>
+    <div class="filterbar"><span class="chip-filter active">Tous</span><span class="chip-filter">Guides</span><span class="chip-filter">Builds</span><span class="chip-filter">Tier Lists</span><span class="chip-filter">News</span><span class="spacer"></span><select class="select" style="width:auto"><option>Plus récents</option><option>Plus populaires</option></select></div>
+  </section>
+
+  <!-- TABS -->
+  <section class="sg-section" id="tabs">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Onglets</h2><p>Basculer entre vues d'un même contenu (ex. PvE / PvP / F2P).</p></div><span class="sec-id">SYS.25</span></div>
+    <div class="demo-box"><div class="tabs" data-tabs>
+      <div class="tab-nav"><button class="active" data-tab="0">PvE</button><button data-tab="1">PvP</button><button data-tab="2">F2P</button></div>
+      <div class="tab-panel" data-panel="0">Build orienté PvE : dégâts soutenus, rotation longue, priorité au taux critique.</div>
+      <div class="tab-panel" data-panel="1" hidden>Build PvP : burst et mobilité, stats défensives renforcées pour survivre aux focus.</div>
+      <div class="tab-panel" data-panel="2" hidden>Variante F2P : sets farmables uniquement, ~8 % de dégâts en moins, 100 % du contenu jouable.</div>
+    </div></div>
+  </section>
+
+  <!-- TABLE -->
+  <section class="sg-section" id="table">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Composants UI</span><h2>Table & pagination</h2><p>Stats, comparatifs et guides d'achat. Pagination des archives.</p></div><span class="sec-id">SYS.26</span></div>
+    <div class="demo-box" style="margin-bottom:22px"><table class="data-table"><thead><tr><th>Statistique</th><th>Priorité</th><th>Cible</th><th>Impact</th></tr></thead><tbody><tr><td><strong>Taux critique</strong></td><td>1</td><td>70 %</td><td>Très élevé</td></tr><tr><td><strong>Dégâts critiques</strong></td><td>2</td><td>200 %+</td><td>Très élevé</td></tr><tr><td><strong>Maîtrise</strong></td><td>3</td><td>800</td><td>Moyen</td></tr></tbody></table></div>
+    <div class="pagination"><a href="#" class="btn btn-ghost btn-sm">‹ PRÉC</a><span class="page current">1</span><a href="#">2</a><a href="#">3</a><span class="dots">···</span><a href="#">12</a><a href="#" class="btn btn-ghost btn-sm">SUIV ›</a></div>
+  </section>
+
+  <!-- ===================== GAMING ===================== -->
+  <span id="gaming"></span>
+
+  <!-- TIER LIST -->
+  <section class="sg-section" id="tierlist">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Tier list complète</h2><p>Lignes S→D avec vignettes de personnages — le composant signature d'un site de guides.</p></div><span class="sec-id">SYS.27</span></div>
+    <div class="tierlist">
+      <div class="tier-row s"><div class="tier-label">S</div><div class="tier-units"><div class="unit-chip"><div class="u-portrait">Wa</div><span class="u-name">Warden</span></div><div class="unit-chip"><div class="u-portrait">Se</div><span class="u-name">Seraph</span></div><div class="unit-chip"><div class="u-portrait">No</div><span class="u-name">Nova</span></div></div></div>
+      <div class="tier-row a"><div class="tier-label">A</div><div class="tier-units"><div class="unit-chip"><div class="u-portrait">Ky</div><span class="u-name">Kyra</span></div><div class="unit-chip"><div class="u-portrait">Dr</div><span class="u-name">Drake</span></div></div></div>
+      <div class="tier-row b"><div class="tier-label">B</div><div class="tier-units"><div class="unit-chip"><div class="u-portrait">Ro</div><span class="u-name">Ronin</span></div><div class="unit-chip"><div class="u-portrait">Ly</div><span class="u-name">Lynx</span></div><div class="unit-chip"><div class="u-portrait">Vi</div><span class="u-name">Viper</span></div></div></div>
+      <div class="tier-row c"><div class="tier-label">C</div><div class="tier-units"><div class="unit-chip"><div class="u-portrait">Sa</div><span class="u-name">Sable</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- CARTE PERSO -->
+  <section class="sg-section" id="charcard">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Carte personnage / item</h2><p>Portrait, élément, rôle et rareté en étoiles.</p></div><span class="sec-id">SYS.28</span></div>
+    <div class="ds-grid cols-4">
+      <div class="char-card"><div class="cc-top ph-1"><span class="badge" style="padding:3px 8px">S</span><span class="element" style="background:var(--danger-tint);color:var(--danger)">🔥</span></div><div class="cc-body"><div class="c-name">Warden</div><div class="c-role">DPS · Mêlée</div><div class="stars">★★★★★</div></div></div>
+      <div class="char-card"><div class="cc-top ph-3"><span class="badge info" style="padding:3px 8px">A</span><span class="element" style="background:var(--info-tint);color:var(--info)">❄️</span></div><div class="cc-body"><div class="c-name">Seraph</div><div class="c-role">Support · Soin</div><div class="stars">★★★★<span class="off">★</span></div></div></div>
+      <div class="char-card"><div class="cc-top ph-2"><span class="badge" style="padding:3px 8px">S</span><span class="element" style="background:var(--volt-tint);color:var(--volt)">⚡</span></div><div class="cc-body"><div class="c-name">Nova</div><div class="c-role">Mage · AoE</div><div class="stars">★★★★★</div></div></div>
+      <div class="char-card"><div class="cc-top ph-4"><span class="badge warning" style="padding:3px 8px">B</span><span class="element" style="background:var(--warning-tint);color:var(--warning)">🌿</span></div><div class="cc-body"><div class="c-name">Ronin</div><div class="c-role">Tank · Bouclier</div><div class="stars">★★★<span class="off">★★</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- LOADOUT -->
+  <section class="sg-section" id="loadout">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Build / loadout</h2><p>Les slots d'équipement d'un build recommandé.</p></div><span class="sec-id">SYS.29</span></div>
+    <div class="loadout">
+      <div class="slot"><div class="s-ico">⚔️</div><div><div class="s-label">Arme</div><div class="s-name">Lame de l'Aube</div></div></div>
+      <div class="slot"><div class="s-ico">🪖</div><div><div class="s-label">Casque</div><div class="s-name">Heaume Furieux</div></div></div>
+      <div class="slot"><div class="s-ico">🛡️</div><div><div class="s-label">Torse</div><div class="s-name">Plastron Rempart</div></div></div>
+      <div class="slot"><div class="s-ico">💍</div><div><div class="s-label">Anneau</div><div class="s-name">Sceau Critique</div></div></div>
+      <div class="slot"><div class="s-ico">📿</div><div><div class="s-label">Amulette</div><div class="s-name">Talisman Maîtrise</div></div></div>
+      <div class="slot empty"><div class="s-ico">＋</div><div><div class="s-label">Relique</div><div class="s-name">Vide</div></div></div>
+    </div>
+  </section>
+
+  <!-- PROS / CONS -->
+  <section class="sg-section" id="proscons">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Pour / contre</h2><p>Synthèse rapide des forces et faiblesses.</p></div><span class="sec-id">SYS.30</span></div>
+    <div class="proscons">
+      <div class="pc-col pros"><h4>Points forts</h4><ul><li>Dégâts soutenus très élevés</li><li>Facile à prendre en main</li><li>Viable en F2P</li><li>Bon en solo comme en équipe</li></ul></div>
+      <div class="pc-col cons"><h4>Points faibles</h4><ul><li>Mobilité moyenne</li><li>Dépendant du taux critique</li><li>Nerf annoncé au patch 3.5</li></ul></div>
+    </div>
+  </section>
+
+  <!-- INFOS-CLÉS -->
+  <section class="sg-section" id="keyfacts">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Encadré infos-clés</h2><p>La fiche d'identité rapide d'un jeu ou d'un contenu.</p></div><span class="sec-id">SYS.31</span></div>
+    <div class="keyfacts" style="max-width:460px">
+      <div class="kf-head">Infos-clés</div>
+      <div class="kf-row"><div class="k">Sortie</div><div class="v">14 mars 2025</div></div>
+      <div class="kf-row"><div class="k">Genre</div><div class="v">Action-RPG live-service</div></div>
+      <div class="kf-row"><div class="k">Plateformes</div><div class="v">PC · PS5 · Xbox</div></div>
+      <div class="kf-row"><div class="k">Éditeur</div><div class="v">Nova Interactive</div></div>
+      <div class="kf-row"><div class="k">Modèle</div><div class="v">Free-to-play</div></div>
+    </div>
+  </section>
+
+  <!-- PATCH NOTES -->
+  <section class="sg-section" id="patch">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Patch notes / changelog</h2><p>Les changements d'équilibrage, codés par type.</p></div><span class="sec-id">SYS.32</span></div>
+    <div class="patch" style="max-width:560px">
+      <div class="p-head"><span class="ver">Patch 3.4</span><span class="badge success"><span class="dot"></span>En ligne</span></div>
+      <div class="p-line"><span class="type buff">Buff</span>Warden — dégâts de l'ultime +12 %</div>
+      <div class="p-line"><span class="type nerf">Nerf</span>Nova — cooldown de l'AoE +2 s</div>
+      <div class="p-line"><span class="type new">New</span>Nouveau set légendaire « Gardien Furieux »</div>
+      <div class="p-line"><span class="type buff">Buff</span>Seraph — soins de zone +8 %</div>
+    </div>
+  </section>
+
+  <!-- CONFIG PC -->
+  <section class="sg-section" id="pcreq">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming · pont hardware</span><h2>Config PC requise</h2><p>Le tableau min / recommandé — la passerelle vers le pilier hardware.</p></div><span class="sec-id">SYS.33</span></div>
+    <div class="pcreq" style="max-width:640px">
+      <div class="req-col min"><div class="req-head">Minimale</div><div class="req-row"><div class="rk">CPU</div><div class="rv">Ryzen 5 2600</div></div><div class="req-row"><div class="rk">GPU</div><div class="rv">GTX 1060 6 Go</div></div><div class="req-row"><div class="rk">RAM</div><div class="rv">8 Go</div></div><div class="req-row"><div class="rk">Stockage</div><div class="rv">50 Go SSD</div></div></div>
+      <div class="req-col reco"><div class="req-head">Recommandée</div><div class="req-row"><div class="rk">CPU</div><div class="rv">Ryzen 5 5600X</div></div><div class="req-row"><div class="rk">GPU</div><div class="rv">RTX 3060 Ti</div></div><div class="req-row"><div class="rk">RAM</div><div class="rv">16 Go</div></div><div class="req-row"><div class="rk">Stockage</div><div class="rv">50 Go NVMe</div></div></div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN & TIMELINE -->
+  <section class="sg-section" id="countdown">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Gaming</span><h2>Countdown & roadmap</h2><p>Compte à rebours d'event et timeline de contenu.</p></div><span class="sec-id">SYS.34</span></div>
+    <div class="ds-grid cols-2">
+      <div class="demo-box"><div class="subhead" style="margin-top:0">Fin de bannière dans</div><div class="countdown"><div class="cd-unit"><b>04</b><span>Jours</span></div><div class="cd-unit"><b>12</b><span>Heures</span></div><div class="cd-unit"><b>37</b><span>Min</span></div></div></div>
+      <div class="demo-box"><div class="subhead" style="margin-top:0">Roadmap saison</div><div class="timeline">
+        <div class="tl-item done"><div class="tl-date">MARS 2026</div><h4>Lancement Saison 5</h4><p>Nouveau perso + tier list.</p></div>
+        <div class="tl-item done"><div class="tl-date">AVRIL 2026</div><h4>Patch 3.4</h4><p>Équilibrage majeur.</p></div>
+        <div class="tl-item"><div class="tl-date">MAI 2026</div><h4>Raid end-game</h4><p>Contenu à venir.</p></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ===================== ÉDITORIAL ===================== -->
+  <span id="editorial"></span>
+
+  <!-- PROSE -->
+  <section class="sg-section" id="prose">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial</span><h2>Prose</h2><p>Le style réel du corps d'article : titres, listes, liens, citation, code, image légendée.</p></div><span class="sec-id">SYS.35</span></div>
+    <div class="demo-box"><div class="prose">
+      <h2>Aperçu du build</h2>
+      <p>Le <strong>Warden</strong> est passé d'un rôle défensif à une véritable menace offensive depuis le rework. Ce build mise sur le <strong>taux critique</strong> pour maximiser les pics de dégâts. Consultez aussi notre <a href="#">guide de progression</a>.</p>
+      <blockquote>« La régularité gagne toujours sur le long terme. »</blockquote>
+      <h3>Pièces recommandées</h3>
+      <ul><li><strong>Arme :</strong> Lame de l'Aube</li><li><strong>Set 4 pièces :</strong> Gardien Furieux</li></ul>
+      <p>La rotation en boucle : <code>Marque → Frappe ×2 → Esquive → Ultime</code>.</p>
+      <figure><div class="ph-img ph-2" style="aspect-ratio:16/9">Capture en jeu</div><figcaption>Fig. 1 — La fenêtre d'esquive parfaite ouvre le buff de +15 %.</figcaption></figure>
+    </div></div>
+  </section>
+
+  <!-- VERDICT -->
+  <section class="sg-section" id="verdict">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial</span><h2>Verdict / TL;DR</h2><p>L'encadré de synthèse en tête d'article.</p></div><span class="sec-id">SYS.36</span></div>
+    <div class="verdict" style="max-width:640px"><div class="v-head"><span class="tier s">S</span><h4>Verdict rapide</h4></div><p>L'un des meilleurs choix offensifs du patch 3.4 : dégâts très élevés, prise en main facile, viable en F2P. Excellent en solo comme en équipe.</p></div>
+  </section>
+
+  <!-- RÉSUMÉ AT-A-GLANCE -->
+  <section class="sg-section" id="summary">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial · signature</span><h2>Résumé « at-a-glance »</h2><p>Le module d'ouverture d'un guide : verdict, stats-clés et infos réunis en un seul coup d'œil (standard Prydwen/Mobalytics). Remplace les blocs verdict + stats empilés.</p></div><span class="sec-id">SYS.36b</span></div>
+    <section class="article-summary">
+      <div class="as-top">
+        <div class="as-verdict">
+          <div class="as-head"><span class="tier s">S</span><h2>Verdict</h2></div>
+          <p>L'un des meilleurs choix offensifs du patch 3.4 : dégâts très élevés, prise en main facile, viable en F2P.</p>
+          <div class="as-rating"><span class="rating"><span class="score">9.2</span><span class="over">/ 10</span></span><span class="badge success"><span class="dot"></span>Recommandé</span></div>
+        </div>
+        <div class="as-stats">
+          <div class="stat"><div class="stat-top"><span class="stat-name">Dégâts</span><span class="stat-val">94</span></div><div class="meter"><span style="width:94%"></span></div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-name">Survie</span><span class="stat-val">71</span></div><div class="meter warning"><span style="width:71%"></span></div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-name">Mobilité</span><span class="stat-val">58</span></div><div class="meter"><span style="width:58%"></span></div></div>
+        </div>
+      </div>
+      <div class="as-facts">
+        <div class="as-fact"><div class="k">Classe</div><div class="v">Warden</div></div>
+        <div class="as-fact"><div class="k">Rôle</div><div class="v">DPS mêlée</div></div>
+        <div class="as-fact"><div class="k">Contenu</div><div class="v">End-game</div></div>
+        <div class="as-fact"><div class="k">Coût F2P</div><div class="v">Accessible</div></div>
+      </div>
+    </section>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sg-section" id="faq">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial</span><h2>FAQ accordéon</h2><p>Questions-réponses repliables — éligible au schema FAQ (rich results).</p></div><span class="sec-id">SYS.37</span></div>
+    <div class="faq" style="max-width:640px">
+      <details open><summary>Ce build est-il viable en F2P ?</summary><div class="faq-body">Oui, entièrement. Le set farmable « Rempart » ne perd que ~8 % de dégâts par rapport au légendaire.</div></details>
+      <details><summary>Quel niveau minimum pour le suivre ?</summary><div class="faq-body">Niveau 70+ avec au moins un set d'équipement légendaire ou violet complet.</div></details>
+      <details><summary>Le build tient-il après le patch 3.5 ?</summary><div class="faq-body">Un nerf de l'ultime est annoncé. On mettra la page à jour dès que les valeurs seront confirmées.</div></details>
+    </div>
+  </section>
+
+  <!-- CALLOUTS -->
+  <section class="sg-section" id="callouts">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial</span><h2>Callouts</h2><p>Encadrés pour attirer l'attention : note, astuce, avertissement, danger.</p></div><span class="sec-id">SYS.38</span></div>
+    <div class="ds-grid cols-2">
+      <div class="callout"><span class="c-label">Note</span><p>Build optimisé end-game. Priorisez la survie en début de progression.</p></div>
+      <div class="callout tip"><span class="c-label">Astuce</span><p>Gardez un cristal de reroll pour re-tirer vos stats sans refarmer.</p></div>
+      <div class="callout warn"><span class="c-label">Attention</span><p>Un ratio critique déséquilibré fait chuter vos dégâts moyens.</p></div>
+      <div class="callout danger"><span class="c-label">Alerte</span><p>Nerf de l'ultime annoncé au patch 3.5.</p></div>
+    </div>
+  </section>
+
+  <!-- SOMMAIRE / AUTEUR / SOURCES -->
+  <section class="sg-section" id="editorial-blocks">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial · E-E-A-T</span><h2>Sommaire · auteur · sources · fil d'Ariane</h2><p>Les signaux de confiance qui rassurent Google et les régies.</p></div><span class="sec-id">SYS.39</span></div>
+    <div class="ds-grid cols-2">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <nav class="breadcrumb"><a href="#">Accueil</a><span class="chev">/</span><a href="#">Builds</a><span class="chev">/</span><span class="current">Warden DPS</span></nav>
+        <nav class="toc"><div class="toc-title">// Sommaire</div><ol><li><a href="#" class="active">Aperçu du build</a></li><li><a href="#">Stuff & stats</a></li><li><a href="#">Talents</a></li><li><a href="#">Rotation</a></li></ol></nav>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="author-box"><div class="avatar">A</div><div><div class="a-name">Alex <svg class="verified" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 1.8 3 .1 1 2.8 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-1 2.8-3 .1L12 22l-2.4-1.8-3-.1-1-2.8L3.2 15.5l.9-2.9-.9-2.9 2.4-1.8 1-2.8 3-.1z"/><path d="M9.5 12.5l1.8 1.8 3.5-3.8" stroke="#07080b" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div><div class="a-role">Rédacteur · 800+ h · Diamant</div><p class="a-bio">Chaque build est testé en conditions réelles avant publication.</p></div></div>
+        <div class="sources"><h4>// Sources</h4><ol><li>Patch notes officiels 3.4 — <a href="#">site éditeur</a></li><li>Datamining communautaire — <a href="#">wiki</a></li><li>Tests en jeu, 40 h — auteur</li></ol></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTAGE & VIDÉO -->
+  <section class="sg-section" id="share">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Éditorial</span><h2>Partage & vidéo</h2><p>Rail de partage sticky et embed vidéo (lazy).</p></div><span class="sec-id">SYS.40</span></div>
+    <div class="ds-grid cols-2">
+      <div class="demo-box" style="display:flex;align-items:center;gap:20px"><div class="share-rail"><a class="sbtn count"><b style="color:var(--volt)">1.2K</b>SHARES</a><a class="sbtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-6.6L6 22H2.9l7.5-8.6L2.5 2h6.6l4.5 6z"/></svg></a><a class="sbtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a></div><span class="note" style="margin:0">Rail sticky au scroll de l'article</span></div>
+      <div class="video-embed"><div class="ph-img ph-3" style="position:absolute;inset:0"></div><div class="play"><div class="btn-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== MONÉTISATION ===================== -->
+  <span id="money"></span>
+
+  <!-- ADS -->
+  <section class="sg-section" id="ads">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Monétisation</span><h2>Encarts publicitaires</h2><p>Formats RSoC/AdSense réservés dès le design (bon CLS). Placés pour le revenu sans casser la lecture.</p></div><span class="sec-id">SYS.41</span></div>
+    <div class="ds-grid cols-2">
+      <div class="ad-slot ad-rectangle"><div class="ad-inner">Rectangle 300×250<br>(in-article / sidebar)</div></div>
+      <div style="display:flex;flex-direction:column;gap:16px"><div class="ad-slot ad-leaderboard"><div class="ad-inner">Leaderboard 728×90</div></div><div class="ad-slot ad-inline"><div class="ad-inner">Bloc natif in-feed</div></div></div>
+    </div>
+    <div class="subhead">Carré (hero deux colonnes)</div>
+    <div style="max-width:300px"><div class="ad-slot ad-square"><div class="ad-inner">Carré 300×300</div></div></div>
+    <div class="subhead">Ancre mobile (meilleur RPM)</div>
+    <div style="position:relative;border:1px solid var(--border)"><div class="ad-anchor" style="position:relative;display:flex"><div class="ad-slot ad-leaderboard"><div class="ad-inner">Bannière 728×90 · ancrée</div></div><button class="close">✕</button></div></div>
+    <p class="note" style="font-family:var(--font-mono);font-size:12px;color:var(--text-faint);margin-top:10px">Comportement : masquée par défaut, apparaît (<b>desktop + mobile</b>) après le scroll passé la byline. Fermable (✕).</p>
+  </section>
+
+  <!-- BUYBOX -->
+  <section class="sg-section" id="buybox">
+    <div class="sec-head"><div class="h-left"><span class="kicker">Monétisation · Affiliation</span><h2>Buy box & comparatif</h2><p>Carte produit affilié (pilier hardware) et tableau comparatif « meilleur X ».</p></div><span class="sec-id">SYS.42</span></div>
+    <div class="disclosure" style="margin-bottom:16px"><span class="d-tag">Affiliation</span> Cette page contient des liens affiliés. Nous pouvons percevoir une commission, sans surcoût pour toi.</div>
+    <div class="buybox" style="margin-bottom:22px">
+      <div class="bb-img">🖱️</div>
+      <div><div class="bb-name">Souris Pulse X2 Pro</div><div class="bb-tag">La meilleure pour le FPS compétitif · 58 g</div><div class="bb-stars">★★★★★ <span style="color:var(--text-faint);font-size:12px">(1 240 avis)</span></div></div>
+      <div class="bb-buy"><div class="bb-price">79 €</div><div class="bb-merchant">chez Amazon</div><a href="#" class="btn btn-primary btn-sm">Voir l'offre →</a></div>
+    </div>
+    <table class="data-table compare-table"><thead><tr><th>Produit</th><th class="best">Notre choix</th><th>Prix</th><th>Verdict</th></tr></thead><tbody>
+      <tr><td><strong>Pulse X2 Pro</strong></td><td class="pick">✓ Meilleur global</td><td>79 €</td><td>Polyvalente, légère</td></tr>
+      <tr><td><strong>Vortex Lite</strong></td><td>—</td><td>49 €</td><td>Meilleur rapport qualité/prix</td></tr>
+      <tr><td><strong>Apex Elite</strong></td><td>—</td><td>129 €</td><td>Haut de gamme</td></tr>
+    </tbody></table>
+  </section>
+
+  <!-- ===================== ÉTATS & OVERLAYS ===================== -->
+
+  <!-- COOKIE -->
+  <section class="sg-section" id="cookie">
+    <div class="sec-head"><div class="h-left"><span class="kicker">États & conformité</span><h2>Bandeau cookies</h2><p>Consentement RGPD — obligatoire dès qu'on affiche de la pub (condition AdSense).</p></div><span class="sec-id">SYS.43</span></div>
+    <div class="cookie-banner"><div class="cb-text"><b>On utilise des cookies.</b> Pour mesurer l'audience et personnaliser la publicité. Tu peux accepter, refuser ou paramétrer.</div><div class="cb-actions"><button class="btn btn-ghost btn-sm">Paramétrer</button><button class="btn btn-secondary btn-sm">Refuser</button><button class="btn btn-primary btn-sm">Accepter</button></div></div>
+  </section>
+
+  <!-- OVERLAYS -->
+  <section class="sg-section" id="overlays">
+    <div class="sec-head"><div class="h-left"><span class="kicker">États & overlays</span><h2>Modale · toast · tooltip</h2><p>Fenêtres et notifications ponctuelles.</p></div><span class="sec-id">SYS.44</span></div>
+    <div class="ds-grid cols-2">
+      <div class="preview-frame" style="min-height:260px"><span class="pf-label">PREVIEW // MODAL</span><div class="scrim"></div>
+        <div class="modal"><div class="m-head"><h4>Confirmer</h4><button class="close">✕</button></div><div class="m-body">Veux-tu vraiment réinitialiser ce build ? Cette action est définitive.</div><div class="m-foot"><button class="btn btn-ghost btn-sm">Annuler</button><button class="btn btn-primary btn-sm">Confirmer</button></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;justify-content:center">
+        <div class="toast success"><span class="t-ico">✓</span><div class="t-text">Build sauvegardé<span>Tu peux le retrouver dans ton profil.</span></div></div>
+        <div class="toast danger"><span class="t-ico">✕</span><div class="t-text">Erreur réseau<span>Réessaie dans un instant.</span></div></div>
+        <div style="display:flex;align-items:center;gap:16px;padding-top:6px"><span class="tip-wrap"><button class="btn btn-secondary btn-sm">Survole-moi</button><span class="tip">Astuce contextuelle</span></span><span class="note" style="margin:0">Tooltip</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATES -->
+  <section class="sg-section" id="states">
+    <div class="sec-head"><div class="h-left"><span class="kicker">États & overlays</span><h2>Skeleton · empty · 404</h2><p>États de chargement, vide et page introuvable.</p></div><span class="sec-id">SYS.45</span></div>
+    <div class="ds-grid cols-3">
+      <div class="card" style="clip-path:none"><div class="sk-thumb skeleton"></div><div class="body"><div class="sk-line skeleton" style="width:40%"></div><div class="sk-line skeleton" style="width:90%"></div><div class="sk-line skeleton" style="width:70%"></div></div></div>
+      <div class="empty"><div class="e-ico">🎮</div><h4>Aucun guide</h4><p>Aucun contenu ne correspond à ces filtres pour l'instant.</p><button class="btn btn-secondary btn-sm">Réinitialiser</button></div>
+      <div class="notfound" style="padding:24px 16px"><div class="code" style="font-size:64px">404</div><h3>Game Over</h3><p>Cette page n'existe pas ou a été déplacée.</p><a href="#" class="btn btn-primary btn-sm">Retour à l'accueil</a></div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="f-col f-about"><a href="#" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="#07080b"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span><span class="logo-text"><b>BLOG</b><span>STARTER</span></span></a><p>Guides, builds et tier lists testés en jeu. L'expertise concrète des joueurs, pas du contenu généré à la chaîne.</p></div>
+      <div class="f-col"><h4>Contenu</h4><a href="#">Guides</a><a href="#">News</a><a href="#">Reviews</a><a href="#">Setup</a></div>
+      <div class="f-col"><h4>Le site</h4><a href="#">À propos</a><a href="#">L'équipe</a><a href="#">Contact</a></div>
+      <div class="f-col"><h4>Légal</h4><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">Cookies</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 BLOGSTARTER — Tous droits réservés.</span><span>DESIGN SYSTEM V2.1 · COMMAND HUD</span></div>
+  </div>
+</footer>
+
+<script>
+  // Tabs
+  document.querySelectorAll('[data-tabs]').forEach(function(t){
+    var btns = t.querySelectorAll('.tab-nav button');
+    var panels = t.querySelectorAll('.tab-panel');
+    btns.forEach(function(b){ b.addEventListener('click', function(){
+      btns.forEach(function(x){ x.classList.remove('active'); });
+      panels.forEach(function(p){ p.hidden = true; });
+      b.classList.add('active');
+      t.querySelector('[data-panel="'+b.dataset.tab+'"]').hidden = false;
+    }); });
+  });
+  // Scrollspy sidebar
+  var links = document.querySelectorAll('.sg-nav a');
+  var map = {};
+  links.forEach(function(a){ var id = a.getAttribute('href').slice(1); var el = document.getElementById(id); if(el) map[id] = a; });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){
+      links.forEach(function(a){ a.classList.remove('active'); });
+      if(map[e.target.id]) map[e.target.id].classList.add('active');
+    }});
+  }, { rootMargin: '-64px 0px -70% 0px' });
+  document.querySelectorAll('.sg-section').forEach(function(s){ obs.observe(s); });
+</script>
+
+</body>
+</html>

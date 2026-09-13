@@ -1,0 +1,18 @@
+/* THÈME · neutral-pro — bleu corporate sur ardoise, sobre (niches sérieuses) */
+:root {
+  --bg:#0b0f17; --bg-elev:#0f1420; --surface-1:#131a27; --surface-2:#1a2332; --surface-3:#22304a;
+  --border:#26324a; --border-strong:#38486a; --grid-line:rgba(255,255,255,.02);
+  --text:#eef2f8; --text-soft:#aab4c6; --text-faint:#6e7a90; --text-dim:#48546a;
+  --accent:#3b82f6; --accent-bright:#60a5fa; --accent-deep:#2563eb;
+  --accent-tint:rgba(59,130,246,.12); --accent-line:rgba(59,130,246,.30); --accent-glow:rgba(59,130,246,.30);
+  --grad-accent:linear-gradient(120deg,#60a5fa,#3b82f6 55%,#2563eb);
+  --on-accent:#ffffff;
+  --success:#22c55e; --success-tint:rgba(34,197,94,.13);
+  --warning:#f59e0b; --warning-tint:rgba(245,158,11,.13);
+  --danger:#ef4444;  --danger-tint:rgba(239,68,68,.13);
+  --info:#38bdf8;    --info-tint:rgba(56,189,248,.13);
+  --font-display:"Sora",system-ui,sans-serif;
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",monospace;
+  --notch:4px;
+}

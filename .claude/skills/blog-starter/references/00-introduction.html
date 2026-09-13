@@ -1,0 +1,173 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partie 00 — Introduction &amp; cadrage · BlogStarter Doc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="doc.css"></head><body>
+<header><div class="wrap"><span class="logo">B</span><span class="brand">BLOG<span>STARTER</span></span><span class="tag"><a href="index.html">← SOMMAIRE</a> · PARTIE 00</span></div></header>
+<div class="doc-hero"><div class="wrap"><a class="back" href="index.html">← Sommaire</a><span class="kick">Partie 00</span><h1>Introduction &amp; cadrage</h1><p class="lede">Comment utiliser le skill <strong>BlogStarter</strong> pour dérouler ce process sur votre propre niche, puis pourquoi ce projet existe, quel modèle économique il sert, sur quelle stack il tourne, et ce qu'il faut avoir en main avant d'écrire la première ligne. On pose aussi le principe directeur qui gouverne tout le reste de la doc.</p></div></div>
+<main class="wrap doc-body"><div class="prose-doc">
+
+<h2>0.0 — Prise en main : le skill BlogStarter</h2>
+<p><strong>BlogStarter</strong> est un <strong>skill Claude Code</strong> qui génère un blog rapide, monétisé et SEO/GEO-ready (Astro + Cloudflare) à partir d'une simple configuration : <strong>niche, catégories, couleurs, auteurs, sujets</strong>. Cette documentation est l'<strong>implémentation de référence</strong> — un média gaming complet — mais le même process s'applique à <strong>n'importe quelle niche</strong>.</p>
+<div class="callout"><span class="l">Deux façons de lire cette doc</span><p>Soit vous <strong>déroulez le process à la main</strong> en suivant les 12 parties comme un tutoriel ; soit vous laissez le <strong>skill</strong> l'orchestrer : il pose les questions, lit la partie de référence adaptée à chaque phase, et <strong>valide avec vous avant d'avancer</strong>. Les deux chemins mènent au même résultat.</p></div>
+
+<h3>Installer le skill</h3>
+<p>Copier le dossier <code>blog-starter/</code> dans un emplacement de skills, puis relancer Claude Code :</p>
+<pre class="cmd"><span class="c"># Option A — disponible partout (recommandé)</span>
+<span class="k">cp</span> -R blog-starter ~/.claude/skills/
+
+<span class="c"># Option B — pour un projet précis</span>
+<span class="k">mkdir</span> -p &lt;votre-projet&gt;/.claude/skills
+<span class="k">cp</span> -R blog-starter &lt;votre-projet&gt;/.claude/skills/</pre>
+
+<h3>Lancer le skill</h3>
+<p>Dans Claude Code, invoquer la commande — ou simplement formuler la demande en langage naturel :</p>
+<pre class="cmd"><span class="k">/blog-starter</span>
+<span class="c"># ou : « crée-moi un blog sur [niche] », « nouveau blog »</span></pre>
+<p>Le skill enchaîne alors un court <strong>questionnaire d'intake</strong>, écrit la config, puis déroule les phases en validant les étapes visuelles (design system, gabarits) avec vous.</p>
+
+<h3>Les questions posées (intake)</h3>
+<p>Préparez ces réponses — c'est tout ce dont le skill a besoin pour démarrer :</p>
+<table class="doc-table">
+<thead><tr><th>Question</th><th>Ce que le skill attend</th><th>Réf.</th></tr></thead>
+<tbody>
+<tr><td><strong>Niche</strong></td><td>Un angle précis et défendable (pas « le gaming » mais « guides de jeux live-service »).</td><td><a href="01-cadrage.html">01</a></td></tr>
+<tr><td><strong>Marque &amp; domaine</strong></td><td>Un nom brandable en <strong>.com</strong> (vérifier la disponibilité).</td><td><a href="01-cadrage.html">01</a></td></tr>
+<tr><td><strong>Catégories</strong></td><td><strong>2 à 5 maximum</strong> — elles structurent nav, silos SEO et contenu.</td><td><a href="01-cadrage.html">01</a></td></tr>
+<tr><td><strong>Langue</strong></td><td>La langue du contenu (ex. <code>en</code>, <code>fr</code>).</td><td><a href="01-cadrage.html">01</a></td></tr>
+<tr><td><strong>Thème</strong></td><td>Un <strong>preset</strong> (command-hud, cyber-magenta, arcade-cyan, neutral-pro, editorial-warm) <em>ou</em> un <strong>accent</strong> (hex) + mode clair/sombre.</td><td><a href="02-design-system.html">02</a></td></tr>
+<tr><td><strong>Auteurs</strong></td><td>Une ou plusieurs personas : nom + bio (crédibilité E-E-A-T).</td><td><a href="04-contenu.html">04</a></td></tr>
+<tr><td><strong>Sujets (seeds)</strong></td><td>Les entités à couvrir (jeux, produits, thèmes) pour amorcer le contenu.</td><td><a href="05-agents.html">05</a></td></tr>
+<tr><td><strong>Monétisation</strong></td><td>Leviers activés : display/RSoC, affiliation, CPI.</td><td><a href="08-monetisation.html">08</a></td></tr>
+<tr><td><strong>Volume</strong></td><td>Nombre d'articles par catégorie pour le premier jet.</td><td><a href="05-agents.html">05</a></td></tr>
+</tbody>
+</table>
+
+<h3>La config : <code>blog.config.json</code></h3>
+<p>Les réponses sont consignées dans un fichier de configuration unique — la source de tous les paramètres injectés ensuite dans le design system, les agents et le projet Astro :</p>
+<pre class="cmd">{
+  <span class="k">"brand"</span>: "BlogStarter",
+  <span class="k">"domain"</span>: "votreblog.com",
+  <span class="k">"niche"</span>: "guides de jeux live-service",
+  <span class="k">"language"</span>: "en",
+  <span class="k">"categories"</span>: ["Guides", "News", "Reviews", "Setup"],
+  <span class="k">"theme"</span>: { "preset": "command-hud" },
+  <span class="c">// ou : "theme": { "accent": "#03A9F4", "mode": "dark" }</span>
+  <span class="k">"authors"</span>: [{ "name": "Alex", "bio": "…" }],
+  <span class="k">"seeds"</span>: ["Genshin Impact", "Honkai: Star Rail", "…"],
+  <span class="k">"content"</span>: { "articlesPerCategory": 3 },
+  <span class="k">"monetization"</span>: { "ads": true, "affiliate": true }
+}</pre>
+
+<h3>Le déroulé (phases &amp; portes de validation)</h3>
+<p>Le skill suit un ordre <strong>non négociable</strong> et lit la partie de référence correspondante <strong>avant</strong> chaque phase. Les 🚦 marquent les portes où il s'arrête pour votre validation.</p>
+<ol class="steps">
+<li><span class="st-t">0 · Intake</span><span class="st-d">Recueillir la config, la valider (max 5 catégories, hex valides…) et écrire <code>blog.config.json</code>.</span></li>
+<li><span class="st-t">1 · Cadrage <span class="c">(réf. 00–01)</span></span><span class="st-d">Confirmer niche, marque et catégories.</span></li>
+<li><span class="st-t">2 · Design system <span class="c">(réf. 02)</span> 🚦</span><span class="st-d">Appliquer le thème (preset ou <code>gen-theme.mjs</code>), générer le styleguide, <strong>valider</strong>.</span></li>
+<li><span class="st-t">3 · Gabarits <span class="c">(réf. 03)</span> 🚦</span><span class="st-d">Article → listing → home themés, <strong>valider</strong>.</span></li>
+<li><span class="st-t">4 · Modèle de contenu <span class="c">(réf. 04)</span></span><span class="st-d">Frontmatter, convention d'images, règle d'optimisation.</span></li>
+<li><span class="st-t">5 · Agents + contenu <span class="c">(réf. 05)</span></span><span class="st-d">Générer les rédacteurs de niche + photo-finder, produire les premiers articles.</span></li>
+<li><span class="st-t">6 · Astro <span class="c">(réf. 06)</span></span><span class="st-d">Scaffold, injection de la config (catégories/marque/auteurs/langue), D1, import.</span></li>
+<li><span class="st-t">7 · SEO/GEO + monétisation <span class="c">(réf. 07–08)</span></span><span class="st-d">Head SEO, JSON-LD, sitemap/robots/ads.txt/llms.txt/RSS, consentement.</span></li>
+<li><span class="st-t">8 · Déploiement <span class="c">(réf. 09–10)</span></span><span class="st-d">Vous exécutez les logins ; D1/R2/KV, build, deploy.</span></li>
+</ol>
+
+<h3>Ce qui est prêt — et ce qui est en cours (v0.1)</h3>
+<p>BlogStarter est en <strong>v0.1</strong>. Le socle design est prêt et testé ; le scaffold Astro, les agents et le schéma de config sont en construction. En attendant, ces phases s'exécutent en suivant la doc de référence à la main.</p>
+<table class="doc-table">
+<thead><tr><th>Composant</th><th>Emplacement</th><th>Statut</th></tr></thead>
+<tbody>
+<tr><td>Design system thémable</td><td><code>templates/design-system/base.css</code></td><td>✅ prêt</td></tr>
+<tr><td>Presets de thèmes (5)</td><td><code>templates/themes/*.css</code></td><td>✅ prêt</td></tr>
+<tr><td>Générateur de thème</td><td><code>scripts/gen-theme.mjs</code></td><td>✅ prêt</td></tr>
+<tr><td>Preview de thème</td><td><code>templates/design-system/theme-preview.html</code></td><td>✅ prêt</td></tr>
+<tr><td>Documentation (12 parties)</td><td><code>references/</code></td><td>✅ prête</td></tr>
+<tr><td>Scaffold Astro</td><td><code>templates/astro/</code></td><td>🚧 en cours</td></tr>
+<tr><td>Agents rédacteurs</td><td><code>templates/agents/</code></td><td>🚧 en cours</td></tr>
+<tr><td>Schéma de config</td><td><code>schema/blog.config.json</code></td><td>🚧 en cours</td></tr>
+</tbody>
+</table>
+<div class="callout tip"><span class="l">Générer un thème custom tout de suite</span><p>Sans attendre le reste, vous pouvez produire une palette complète depuis un seul accent : <code>node scripts/gen-theme.mjs "#03A9F4" dark mon-theme &gt; templates/themes/mon-theme.css</code>, puis prévisualiser en remplaçant <code>__THEME__</code> dans <code>theme-preview.html</code>.</p></div>
+
+<h2>0.1 — Objectif &amp; modèle économique</h2>
+<p><strong>BlogStarter</strong> (<code>votreblog.com</code>) est un blog / média gaming en anglais, articulé autour d'un persona-auteur unique, <strong>Alex</strong>. L'objectif n'est pas de « faire un site » mais de bâtir un <strong>actif média rentable</strong> : un flux de contenu de niche capable d'attirer du trafic organique et de le monétiser à la marge la plus large possible.</p>
+<p>Le modèle s'inspire directement de <strong>Prydwen</strong> : des guides denses et tenus à jour pour des jeux <strong>live-service</strong> (tier lists, builds, reroll, roadmaps de patch). Ce type de contenu génère de la recherche récurrente — chaque patch, chaque nouveau personnage relance la demande — et fidélise une audience qui revient.</p>
+<p>Le contenu se répartit en <strong>quatre catégories</strong> — <strong>Guides</strong>, <strong>News</strong>, <strong>Reviews</strong> et <strong>Setup</strong> — dont le rôle éditorial et l'articulation en silos sont détaillés en <a href="01-cadrage.html">partie 01</a>.</p>
+<p>La monétisation combine trois leviers :</p>
+<ul>
+<li><strong>Display / RSoC</strong> (Related Search on Content, style AdSense) : la couche de revenu de base, servie sur chaque page vue.</li>
+<li><strong>Affiliation</strong> : buy box et comparatifs (pilier hardware tenu en réserve : « meilleur X pour jouer à… »).</li>
+<li><strong>Offres jeux en CPI</strong> (coût par installation) : le média gaming se prête naturellement à promouvoir les jeux qu'il couvre.</li>
+</ul>
+<div class="callout"><span class="l">Le principe économique</span><p>La logique est celle de l'<strong>ad-arbitrage</strong> : <strong>« vitesse = marge par visiteur »</strong>. Chaque milliseconde de chargement et chaque octet superflu grignotent la marge sur un visiteur payé. Un site rapide, léger, servi au bord du réseau, transforme plus de trafic en revenu net. C'est pour ça que la performance n'est pas une option décorative — c'est le cœur du business.</p></div>
+
+<h2>0.2 — Vue d'ensemble de la stack</h2>
+<p>Toute la stack a été choisie pour servir ce principe : rendu côté serveur au plus près de l'utilisateur, zéro serveur à gérer, coûts qui restent dans les quotas gratuits au démarrage. Chaque brique a un rôle précis.</p>
+<table class="doc-table">
+<thead><tr><th>Brique</th><th>Rôle</th><th>Pourquoi elle</th></tr></thead>
+<tbody>
+<tr><td><strong>Astro</strong></td><td>Framework de rendu (SSR)</td><td>Zéro JS par défaut, rendu HTML rapide, s'adapte au bord Cloudflare via l'adaptateur officiel.</td></tr>
+<tr><td><strong>Cloudflare Workers</strong></td><td>Exécution au bord (edge)</td><td>Le rendu se fait au plus près du visiteur, sans serveur à maintenir.</td></tr>
+<tr><td><strong>D1</strong></td><td>Base de données (SQLite au bord)</td><td>Stocke le contenu (articles, catégories, jeux, auteurs, tags) et permet des requêtes SQL rapides.</td></tr>
+<tr><td><strong>R2</strong></td><td>Stockage objet (médias)</td><td>Héberge les créatives publicitaires (WebP), servies via une route dédiée sans frais d'egress.</td></tr>
+<tr><td><strong>KV</strong></td><td>Clé-valeur (sessions)</td><td>Fournit le binding <code>SESSION</code> requis par Astro pour les sessions.</td></tr>
+</tbody>
+</table>
+<p>Concrètement : le contenu vit dans <strong>D1</strong>, les images/créatives dans <strong>R2</strong>, les sessions dans <strong>KV</strong>, et <strong>Astro</strong> assemble le tout en HTML rendu par un <strong>Worker</strong>, mis en cache au bord. Le détail de chaque brique est traité dans les parties 06 (Astro), 08 (monétisation) et 09 (déploiement).</p>
+
+<h3>Versions réelles utilisées</h3>
+<table class="doc-table">
+<thead><tr><th>Paquet</th><th>Version</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>Astro</td><td><strong>^7.2.6</strong></td><td>⚠ L'API runtime se comporte comme « Astro v6 » — voir le piège en 0.3 et en partie 06.</td></tr>
+<tr><td>@astrojs/cloudflare</td><td><strong>^14.2.4</strong></td><td>Adaptateur SSR Cloudflare.</td></tr>
+<tr><td>drizzle-orm</td><td><strong>^0.45</strong></td><td>ORM typé pour D1.</td></tr>
+<tr><td>drizzle-kit</td><td><strong>^0.31</strong></td><td>Génération des migrations.</td></tr>
+<tr><td>gray-matter · marked</td><td>—</td><td>Parsing du frontmatter YAML et rendu Markdown → HTML.</td></tr>
+</tbody>
+</table>
+
+<h2>0.3 — Prérequis &amp; outils</h2>
+<p>Avant de commencer, l'environnement de travail doit être en place. Voici les outils réellement utilisés pour ce build, avec leurs versions.</p>
+<table class="doc-table">
+<thead><tr><th>Outil</th><th>Version</th><th>À quoi il sert</th></tr></thead>
+<tbody>
+<tr><td><strong>Node</strong></td><td>24</td><td>Runtime JS pour Astro, les scripts d'import, etc.</td></tr>
+<tr><td><strong>npm</strong></td><td>11</td><td>Gestionnaire de paquets.</td></tr>
+<tr><td><strong>wrangler</strong></td><td>^4.125</td><td>CLI Cloudflare : D1, R2, KV, déploiement.</td></tr>
+<tr><td><strong>gh CLI</strong></td><td>2.92</td><td>GitHub en ligne de commande (repo privé). Ici authentifié sur le compte « username ».</td></tr>
+<tr><td><strong>cwebp / dwebp</strong></td><td>—</td><td>Encodage/décodage WebP + strip des métadonnées des images.</td></tr>
+<tr><td><strong>sips</strong></td><td>macOS</td><td>Redimensionnement d'images (natif macOS).</td></tr>
+</tbody>
+</table>
+<p>Il faut également disposer de :</p>
+<ul>
+<li>Un <strong>compte Cloudflare</strong> (Workers, D1, R2, KV) — ici <code>you@example.com</code>.</li>
+<li>Un <strong>compte GitHub</strong> pour le versioning (repo privé).</li>
+<li>Un <strong>nom de domaine en .com</strong>, brandable — ici <code>votreblog.com</code> (le cadrage marque/domaine est en partie 01).</li>
+</ul>
+
+<p>Vérifier rapidement que la chaîne d'outils répond :</p>
+<pre class="cmd"><span class="k">node</span> -v <span class="c"># v24.x</span>
+<span class="k">npm</span> -v <span class="c"># 11.x</span>
+<span class="k">npx wrangler</span> --version <span class="c"># ^4.125</span>
+<span class="k">gh</span> auth status <span class="c"># doit indiquer un compte connecté</span></pre>
+
+<div class="callout warn"><span class="l">Piège Astro à connaître dès maintenant</span><p>Le projet tourne en Astro <strong>^7.2.6</strong>, mais l'API runtime se comporte comme <strong>Astro v6</strong> : <code>Astro.locals.runtime.env</code> a été <strong>supprimé</strong>. L'accès aux bindings (D1, R2, KV) passe désormais par <code>import { env } from 'cloudflare:workers'</code>. Ignorer ce point provoque une <strong>erreur 500 au premier run</strong>. Détaillé en partie 06.</p></div>
+
+<h2>0.4 — Le principe directeur</h2>
+<p>Trois idées gouvernent tout le reste de cette documentation. Les intérioriser évite l'écrasante majorité des erreurs.</p>
+<ol class="steps">
+<li><span class="st-t">Le design system est la source de vérité unique</span><span class="st-d">On ne dessine pas des pages, on dessine un <strong>système</strong>. Le fichier <code>styles-v2.css</code> est la référence : toute page en découle, et toute modification d'une page passe <strong>d'abord</strong> par le design system, puis se répercute. Jamais l'inverse. Ce principe est développé en <a href="02-design-system.html">partie 02</a>.</span></li>
+<li><span class="st-t">L'ordre n'est pas négociable</span><span class="st-d">Design system → gabarits (article → listing → home) → contenu → adaptation Astro → déploiement. Sauter une étape, c'est reconstruire deux fois. C'est la raison pour laquelle la partie 02 vient <strong>avant</strong> tout le reste.</span></li>
+<li><span class="st-t">Le contenu est irremplaçable</span><span class="st-d">La technique rend le site rapide et scalable ; le vécu — on joue, on teste, on note — le rend <strong>défendable face à l'IA</strong> et crédible au regard de l'E-E-A-T. Les deux ensemble forment un actif durable.</span></li>
+</ol>
+
+<div class="callout tip"><span class="l">À retenir</span><p>Cette partie n'écrit aucune ligne de code de site. Elle installe la <strong>bonne posture</strong> : un objectif business clair (monétiser du trafic gaming à marge maximale), une stack alignée sur cet objectif (rapide, edge, quasi gratuite), et une règle de fer (le design system d'abord). La suite ne fait qu'exécuter ces choix, dans l'ordre.</p></div>
+
+</div>
+<nav class="doc-pager"><a href="index.html"><span class="dir">← Précédent</span><span class="ttl">Sommaire</span></a><a class="next" href="01-cadrage.html"><span class="dir">Suivant →</span><span class="ttl">Partie 01 — Cadrage éditorial</span></a></nav>
+</main>
+<footer><div class="wrap">BlogStarter — Documentation du process · Partie 00</div></footer></body></html>

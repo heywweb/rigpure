@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlogStarter — Gaming guides, builds & news</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- SOURCE DE VÉRITÉ : styles-v2.css. Home assemblée avec les composants existants. -->
+<link rel="stylesheet" href="styles-v2.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container">
+    <a href="#" class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="#07080b" aria-hidden="true"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span>
+      <span class="logo-text"><b>BLOG</b><span>STARTER</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#" class="active" aria-current="page">Home</a>
+      <a href="#">Guides</a>
+      <a href="#">News</a>
+      <a href="#">Reviews</a>
+      <a href="#">Setup</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>SEARCH</span>
+      </div>
+      <a href="#" class="btn btn-primary btn-sm">Subscribe</a>
+    </div>
+  </div>
+</header>
+
+<!-- BANDE PUB HAUTE -->
+<div class="ad-band"><div class="container"><div class="ad-slot ad-leaderboard"><div class="ad-inner">Leaderboard 728×90 · top of page</div></div></div></div>
+
+<div class="article-wrap">
+
+  <!-- HERO / SPOTLIGHT -->
+  <div class="container">
+    <div class="section-head" style="border:none;padding-bottom:0;margin-bottom:16px"><h2>Featured</h2></div>
+    <div class="spotlight">
+      <article class="feature"><div class="bg ph-img ph-2"></div><span class="badge info" style="align-self:flex-start">Tier List</span><h2>Character tier list — Season 5</h2></article>
+      <div class="side">
+        <a class="mini"><div class="thumb ph-img ph-1"></div><div><h4>Warden DPS end-game build</h4><div class="m-meta">BUILD · 9 MIN</div></div></a>
+        <a class="mini"><div class="thumb ph-img ph-3"></div><div><h4>Team Empreintes · The Granny Detective Society</h4><div class="m-meta">INTERVIEW · 6 MIN</div></div></a>
+        <a class="mini"><div class="thumb ph-img ph-4"></div><div><h4>What PC build for 144 fps?</h4><div class="m-meta">SETUP · 10 MIN</div></div></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JEUX COUVERTS -->
+  <div class="container" style="margin-top:var(--s8)">
+    <div class="section-head"><h2>Games covered</h2><a href="#" class="see-all">All games →</a></div>
+    <div class="grid cols-4">
+      <a class="game-card"><div class="bg ph-img ph-1"></div><div><span class="g-name">Eclipse Online</span><span class="g-count">128 guides</span></div></a>
+      <a class="game-card"><div class="bg ph-img ph-2"></div><div><span class="g-name">Aetheria</span><span class="g-count">94 guides</span></div></a>
+      <a class="game-card"><div class="bg ph-img ph-3"></div><div><span class="g-name">Vanguard TD</span><span class="g-count">67 guides</span></div></a>
+      <a class="game-card"><div class="bg ph-img ph-4"></div><div><span class="g-name">Nova Rift</span><span class="g-count">51 guides</span></div></a>
+    </div>
+  </div>
+
+  <!-- CORPS : contenu principal + sidebar -->
+  <div class="container">
+    <div class="listing-layout">
+
+      <main>
+        <!-- DERNIERS GUIDES -->
+        <div class="section-head"><h2>Latest guides</h2><a href="#" class="see-all">View all →</a></div>
+        <div class="grid cols-2">
+          <article class="card"><div class="thumb"><div class="ph-img ph-1">Build</div><span class="badge cat">Build</span></div><div class="body"><span class="idx">// 001</span><h3>Warden DPS end-game build</h3><p class="excerpt">Gear, talents and rotation to dominate.</p><div class="meta"><span>9 MIN</span><span class="sep">·</span><span>TIER S</span></div></div></article>
+          <article class="card"><div class="thumb"><div class="ph-img ph-3">Guide</div><span class="badge success cat">Guide</span></div><div class="body"><span class="idx">// 002</span><h3>Farm resources efficiently</h3><p class="excerpt">The best farming routes.</p><div class="meta"><span>7 MIN</span><span class="sep">·</span><span>BEGINNER</span></div></div></article>
+          <article class="card"><div class="thumb"><div class="ph-img ph-2">Tier List</div><span class="badge info cat">Tier List</span></div><div class="body"><span class="idx">// 003</span><h3>DPS tier list — Season 5</h3><p class="excerpt">The current meta ranking.</p><div class="meta"><span>12 MIN</span><span class="sep">·</span><span>UPD YESTERDAY</span></div></div></article>
+          <article class="card"><div class="thumb"><div class="ph-img ph-4">Build</div><span class="badge cat">Build</span></div><div class="body"><span class="idx">// 004</span><h3>Nova Mage AoE build</h3><p class="excerpt">Devastating burst in the end-game.</p><div class="meta"><span>10 MIN</span><span class="sep">·</span><span>TIER S</span></div></div></article>
+        </div>
+
+        <!-- PUB IN-FEED -->
+        <div class="ad-slot ad-inline" style="margin-top:20px"><div class="ad-inner">Native in-feed block</div></div>
+
+        <!-- DERNIÈRES NEWS -->
+        <div class="section-head" style="margin-top:var(--s7)"><h2>Latest news</h2><a href="#" class="see-all">All news →</a></div>
+        <div class="grid cols-2">
+          <article class="card"><div class="thumb"><div class="ph-img ph-3">Interview</div><span class="badge info cat">Interview</span></div><div class="body"><span class="idx">// 001</span><h3>Team Empreintes talks to us about The Granny Detective Society</h3><p class="excerpt">Meeting the Angoulême-based studio.</p><div class="meta"><span>JUL 25</span><span class="sep">·</span><span>6 MIN</span></div></div></article>
+          <article class="card"><div class="thumb"><div class="ph-img ph-1">News</div><span class="badge success cat">News</span></div><div class="body"><span class="idx">// 002</span><h3>Eclipse Online: patch 3.4 reshuffles the meta</h3><p class="excerpt">Buffs, nerfs and a new legendary set.</p><div class="meta"><span>JUL 22</span><span class="sep">·</span><span>4 MIN</span></div></div></article>
+        </div>
+      </main>
+
+      <!-- SIDEBAR STICKY -->
+      <aside class="listing-side">
+        <div class="ad-slot ad-rectangle"><div class="ad-inner">Rectangle 300×250<br>sidebar (top)</div></div>
+        <div>
+          <div class="section-head" style="margin-bottom:14px"><h2 style="font-size:var(--fs-lg)">Trending</h2></div>
+          <div class="trending">
+            <div class="tr-item"><span class="rank">1</span><div><h4>Character tier list S5</h4><div class="t-meta">12.4K VIEWS</div></div></div>
+            <div class="tr-item"><span class="rank">2</span><div><h4>Warden DPS end-game build</h4><div class="t-meta">8.1K VIEWS</div></div></div>
+            <div class="tr-item"><span class="rank">3</span><div><h4>Optimized farming guide</h4><div class="t-meta">6.7K VIEWS</div></div></div>
+            <div class="tr-item" style="border:none"><span class="rank">4</span><div><h4>144 fps PC build by budget</h4><div class="t-meta">5.2K VIEWS</div></div></div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="container" style="margin-top:var(--s8)">
+    <div class="newsletter"><h3>Never miss a patch</h3><p>Up-to-date guides, builds and tier lists, straight to your inbox. Zero spam.</p><form class="nl-form" onsubmit="return false"><input type="email" placeholder="you@email.com"><button class="btn btn-primary">OK</button></form></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="f-col f-about"><a href="#" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="#07080b" aria-hidden="true"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span><span class="logo-text"><b>BLOG</b><span>STARTER</span></span></a><p>Guides, builds and tier lists tested in-game. Real hands-on expertise from players, not mass-produced content.</p></div>
+      <div class="f-col"><h4>Content</h4><a href="#">Guides</a><a href="#">News</a><a href="#">Reviews</a><a href="#">Setup</a></div>
+      <div class="f-col"><h4>The site</h4><a href="#">About</a><a href="#">The team</a><a href="#">Contact</a></div>
+      <div class="f-col"><h4>Legal</h4><a href="#">Legal notice</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 BLOGSTARTER — All rights reserved.</span><span>DESIGN SYSTEM V2.1 · COMMAND HUD</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

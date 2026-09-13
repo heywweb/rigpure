@@ -1,0 +1,109 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partie 04 — Modèle de contenu · BlogStarter Doc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="doc.css"></head><body>
+<header><div class="wrap"><span class="logo">B</span><span class="brand">BLOG<span>STARTER</span></span><span class="tag"><a href="index.html">← SOMMAIRE</a> · PARTIE 04</span></div></header>
+<div class="doc-hero"><div class="wrap"><a class="back" href="index.html">← Sommaire</a><span class="kick">Partie 04</span><h1>Modèle de contenu</h1><p class="lede">Un fichier Markdown par article, un frontmatter normalisé, une convention d'images inspirée de WordPress, et une règle stricte : toute image est optimisée et débarrassée de ses métadonnées avant d'être stockée. Voici le format exact tel qu'il a été appliqué.</p></div></div>
+<main class="wrap doc-body"><div class="prose-doc">
+
+<h2>Un fichier Markdown par article</h2>
+<p>Chaque article est un fichier <code>.md</code> unique, rangé par catégorie sous <code>contents/</code> :</p>
+<pre class="filetree">contents/
+├── <span class="d">guides/</span>   <span class="c"># guides pratiques, tier lists, builds</span>
+├── <span class="d">news/</span>     <span class="c"># actualités</span>
+├── <span class="d">reviews/</span>  <span class="c"># tests avec note + pros/cons</span>
+├── <span class="d">setup/</span>    <span class="c"># hardware (laissé vide au démarrage)</span>
+└── _images.json  <span class="c"># banque d'images par jeu (voir Partie 05)</span></pre>
+<p>Chaque fichier commence par un <strong>frontmatter YAML</strong> (les métadonnées, entre deux <code>---</code>), suivi du corps rédigé en Markdown. Ce découplage donne des articles portables, versionnables dans Git, et faciles à parser à l'import (Partie 06).</p>
+
+<h2>Le frontmatter (métadonnées normalisées)</h2>
+<p>Le frontmatter est le contrat entre le contenu et le site. Voici le <strong>vrai frontmatter</strong> de <code>contents/guides/war-thunder.md</code> :</p>
+<pre class="cmd code"><span class="k">---</span>
+<span class="k">title:</span> <b>"War Thunder Beginner's Guide: Grind Smart, Survive Longer, Win More"</b>
+<span class="k">slug:</span> <b>"war-thunder"</b>
+<span class="k">category:</span> <b>"guides"</b>
+<span class="k">game:</span> <b>"War Thunder"</b>
+<span class="k">author:</span> <b>"Alex"</b>
+<span class="k">date:</span> <b>"2026-08-24"</b>
+<span class="k">dek:</span> <b>"War Thunder's tech trees are enormous and its economy is unforgiving. Here's how to pick a starter nation, avoid the mid-tier grind wall, and actually stay alive in your first battles."</b>
+<span class="k">cover:</span> <b>"https://cdn.akamai.steamstatic.com/steam/apps/236390/header.jpg"</b>
+<span class="k">cover_alt:</span> <b>"War Thunder official Steam header artwork featuring military vehicles"</b>
+<span class="k">cover_source:</span> <b>"Steam (store CDN) — Gaijin Entertainment"</b>
+<span class="k">tags:</span> [<b>"beginner"</b>, <b>"vehicular-combat"</b>, <b>"simulation"</b>, <b>"free-to-play"</b>, <b>"progression"</b>]
+<span class="k">reading_time:</span> 9
+<span class="k">tier:</span> null
+<span class="k">featured:</span> false
+<span class="k">---</span></pre>
+<p>Les champs, et à quoi ils servent :</p>
+<table class="doc-table">
+  <thead><tr><th>Champ</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>title</code></td><td>Titre de l'article (accrocheur, inclut le nom du jeu).</td></tr>
+    <tr><td><code>slug</code></td><td>Identifiant d'URL. Ici <code>war-thunder</code> → <code>/guides/war-thunder</code>.</td></tr>
+    <tr><td><code>category</code></td><td>Une des 4 : <code>guides</code> · <code>news</code> · <code>reviews</code> · <code>setup</code>.</td></tr>
+    <tr><td><code>game</code></td><td>Nom exact du jeu (relie l'article à une entité « game » en base).</td></tr>
+    <tr><td><code>author</code></td><td>La persona du site : <strong>Alex</strong>.</td></tr>
+    <tr><td><code>date</code></td><td>Date de publication (<code>AAAA-MM-JJ</code>).</td></tr>
+    <tr><td><code>dek</code></td><td>Le chapô : l'angle de l'article en 1-2 phrases.</td></tr>
+    <tr><td><code>cover</code> · <code>cover_alt</code> · <code>cover_source</code></td><td>Image de couverture, son texte alternatif (a11y + SEO), et sa source (traçabilité des droits). Le <code>cover_source</code> est la <strong>concaténation de <code>source</code> + <code>credit</code></strong> de l'entrée correspondante dans <code>_images.json</code> (Partie 05).</td></tr>
+    <tr><td><code>tags</code></td><td>Liste de tags (alimentent les archives « tag »).</td></tr>
+    <tr><td><code>reading_time</code></td><td>Temps de lecture estimé, en minutes.</td></tr>
+    <tr><td><code>tier</code></td><td>Spécifique aux <strong>guides</strong> : <code>"S"</code>/<code>"A"</code>… si l'article est une tier list, sinon <code>null</code>.</td></tr>
+    <tr><td><code>featured</code></td><td>Mise en avant sur la home (<code>false</code> par défaut).</td></tr>
+  </tbody>
+</table>
+<div class="callout info"><span class="l">Champs spécifiques aux reviews</span><p>Les <strong>tests</strong> ajoutent au frontmatter : <code>rating</code> (note /10 à une décimale), <code>verdict</code> (phrase de synthèse), <code>pros</code> et <code>cons</code> (listes de points forts / faibles). Ces champs alimentent directement les blocs verdict/note et pros/cons du gabarit article (Partie 03).</p></div>
+<div class="callout info"><span class="l">Les champs SEO ne sont PAS dans le frontmatter</span><p>Les champs SEO — <code>meta_description</code>, <code>og_image</code>, <code>canonical</code>, <code>noindex</code>, <code>draft</code> — <strong>n'existent pas dans le frontmatter Markdown</strong>. Ils sont <strong>générés / complétés à l'import</strong> (par exemple <code>og_image</code> qui reprend la cover à défaut) et <strong>stockés en D1</strong>, dans les colonnes SEO de la table <code>articles</code>. Détail du mécanisme en <a href="06-astro.html">Partie 06</a>.</p></div>
+<p>Le corps qui suit le frontmatter est du Markdown simple : une intro, 2 à 4 sections <code>##</code>, des listes, des conseils concrets, et une mini-conclusion. Il sera converti en HTML à l'import (<code>marked</code>, Partie 06).</p>
+
+<h2>Convention d'images « WordPress »</h2>
+<p>Les images de couverture sont stockées selon la convention de chemin de WordPress :</p>
+<pre class="cmd">wp-content/uploads/<b>AAAA/MM/JJ/</b>fichier.webp</pre>
+<p>Concrètement, les covers de ce build vivent sous <code>wp-content/uploads/2026/08/24/</code>. Pourquoi reprendre cette convention alors que le site ne tourne pas sous WordPress ?</p>
+<ul>
+  <li><strong>Portabilité</strong> — c'est le standard le plus répandu du web éditorial. Migrer depuis ou vers WordPress un jour ne casse pas les chemins d'images.</li>
+  <li><strong>URLs stables</strong> — dater le chemin (année/mois/jour) fige une adresse qui ne bouge plus : bon pour le cache, bon pour le SEO, pas de lien mort quand l'organisation du contenu évolue.</li>
+  <li><strong>Rangement naturel</strong> — les médias s'archivent par date d'ajout sans effort d'organisation.</li>
+</ul>
+<p>À l'import (Partie 06), le script télécharge les covers distantes vers ce dossier local et réécrit le champ <code>cover</code> en URL locale. Le dossier est ensuite servi en statique par Astro.</p>
+<div class="callout warn"><span class="l">Anti-CLS — dimensions + lazy</span><p>Au rendu, toute <code>&lt;img&gt;</code> doit porter ses <strong>dimensions explicites (<code>width</code>/<code>height</code>)</strong> et <code>loading="lazy"</code> pour réserver l'espace et éviter le décalage de mise en page (<em>Cumulative Layout Shift</em>). C'est une exigence détaillée en <a href="07-seo-geo.html">Partie 07</a>.</p></div>
+
+<h2>Règle d'or des images : optimiser ET nettoyer les métadonnées</h2>
+<div class="callout"><span class="l">Règle</span><p><strong>Toute image est optimisée <em>et</em> débarrassée de ses métadonnées avant d'être stockée.</strong> On ne garde ni EXIF, ni XMP, ni signatures C2PA / « generated by AI », ni blocs éditeur. Poids minimal, empreinte propre, zéro fuite d'information.</p></div>
+
+<h3>Les outils et leurs pièges</h3>
+<table class="doc-table">
+  <thead><tr><th>Outil</th><th>Comportement réel</th></tr></thead>
+  <tbody>
+    <tr><td><code>cwebp</code></td><td>Encode en WebP et <strong>strippe TOUTES les métadonnées par défaut</strong>. C'est l'outil de référence pour les créatives pub (sortie propre garantie).</td></tr>
+    <tr><td><code>dwebp</code></td><td>Décode un WebP vers PNG (étape intermédiaire pour repartir d'une image sans métadonnées).</td></tr>
+    <tr><td><code>sips</code></td><td>Redimensionne (natif macOS) mais <strong>laisse un bloc vide « Photoshop 3.0 »</strong> et parfois du XMP résiduel. À ne pas utiliser seul quand l'objectif est un strip total.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn"><span class="l">Piège sips</span><p><code>sips</code> semble « nettoyer » mais réinjecte un bloc <strong>« Photoshop 3.0 »</strong> (et parfois du XMP). Une image passée uniquement par <code>sips</code> n'est donc pas réellement débarrassée de ses métadonnées.</p></div>
+
+<h3>Exemples de commandes réelles</h3>
+<p>Pour une <strong>créative pub</strong> (le cas le plus fréquent), <code>cwebp</code> suffit — il produit un WebP optimisé et sans métadonnées en une passe :</p>
+<pre class="cmd"><span class="c"># WebP optimisé, sans métadonnées (comportement par défaut de cwebp)</span>
+<span class="k">cwebp</span> -q 82 arknights-endfield-728x90.png -o arknights-endfield-728x90.webp
+
+<span class="c"># redimensionner à la volée pendant l'encodage (leaderboard 728×90)</span>
+<span class="k">cwebp</span> -q 82 -resize 728 90 source.png -o arknights-endfield-728x90.webp</pre>
+<p>Pour obtenir un <strong>JPEG parfaitement propre</strong> (quand on doit rester en JPEG), on enchaîne les trois outils pour laver l'image de tout métadonnée résiduelle — <code>cwebp</code> strippe, <code>dwebp</code> ramène en pixels bruts, <code>sips</code> réencode :</p>
+<pre class="cmd"><span class="c"># chaîne de strip total : cwebp → dwebp → sips</span>
+<span class="k">cwebp</span> -q 90 photo.jpg -o tmp.webp        <span class="c"># 1. strippe toutes les métadonnées</span>
+<span class="k">dwebp</span> tmp.webp -o tmp.png                 <span class="c"># 2. décode en PNG neutre</span>
+<span class="k">sips</span> -s format jpeg tmp.png --out clean.jpg  <span class="c"># 3. réencode en JPEG</span></pre>
+
+<h3>Vérifier qu'il ne reste rien</h3>
+<p>On contrôle le résultat en cherchant les marqueurs de métadonnées connus dans le binaire :</p>
+<pre class="cmd"><span class="k">strings</span> clean.jpg | <span class="k">grep</span> -iE <b>"xmp|c2pa|openai|adobe|FBMD"</b></pre>
+<p>Une sortie <strong>vide</strong> = image propre. Les motifs recherchés couvrent le XMP (Adobe), les signatures de provenance <strong>C2PA</strong>, les marqueurs de génération IA (<code>openai</code>), les blocs <strong>Adobe/Photoshop</strong>, et le tag Facebook <code>FBMD</code>.</p>
+<div class="callout tip"><span class="l">En pratique</span><p>Créatives pub → <code>cwebp</code> seul (WebP, léger, propre) : elles finiront sur R2 et seront servies via la route <code>/media</code> (Partie 06). Photo qui doit rester JPEG → chaîne <code>cwebp → dwebp → sips</code>, puis vérification <code>strings | grep</code>. Dans tous les cas, on ne stocke jamais une image sans l'avoir contrôlée.</p></div>
+
+</div>
+<nav class="doc-pager"><a href="03-gabarits.html"><span class="dir">← Précédent</span><span class="ttl">Valider les gabarits</span></a><a class="next" href="05-agents.html"><span class="dir">Suivant →</span><span class="ttl">Production par agents</span></a></nav>
+</main>
+<footer><div class="wrap">BlogStarter — Documentation du process · Partie 04</div></footer></body></html>

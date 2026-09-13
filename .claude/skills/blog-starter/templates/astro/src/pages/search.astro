@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import AdRectangle from '../components/AdRectangle.astro';
+import { searchArticles, trending } from '../lib/queries';
+import { env } from 'cloudflare:workers';
+
+const DB = (env as any).DB as D1Database;
+const q = (Astro.url.searchParams.get('q') || '').trim().slice(0, 80);
+const results = q ? await searchArticles(DB, q) : [];
+const trend = await trending(DB, 4);
+Astro.response.headers.set('Cache-Control', 'no-store');
+---
+<BaseLayout title={q ? `Search: ${q} — {{brand}}` : `Search — {{brand}}`} noindex={true} active="">
+  <div class="article-wrap">
+    <div class="container">
+      <nav class="breadcrumb" style="margin-bottom:16px" aria-label="Breadcrumb"><a href="/">Home</a><span class="chev" aria-hidden="true">/</span><span class="current">Search</span></nav>
+
+      <div class="hub-header">
+        <div class="bg ph-img ph-3"></div>
+        <span class="badge" style="align-self:flex-start">Search</span>
+        <h1 class="h-title">Search</h1>
+        <form class="nl-form" method="get" action="/search" role="search" style="margin-top:12px;max-width:560px">
+          <input type="search" name="q" value={q} placeholder="Search articles…" aria-label="Search articles" autofocus />
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        {q && <p class="h-desc" style="margin-top:12px">{results.length} result{results.length === 1 ? '' : 's'} for “{q}”.</p>}
+      </div>
+
+      <div class="listing-layout">
+        <main>
+          {q && results.length === 0 && (
+            <p style="color:var(--muted);padding:24px 0">No articles match your search. Try another term.</p>
+          )}
+          <div class="listing-grid">
+            {results.map((a: any, i: number) => <ArticleCard art={a} index={i + 1} />)}
+          </div>
+        </main>
+
+        <aside class="listing-side">
+          <AdRectangle />
+          <div>
+            <div class="section-head" style="margin-bottom:14px"><h2 style="font-size:var(--fs-lg)">Trending</h2></div>
+            <div class="trending">
+              {trend.map((a: any, i: number) => (
+                <a class="tr-item" href={`/${a.catSlug}/${a.slug}`} style={`color:inherit;${i === trend.length - 1 ? 'border:none' : ''}`}>
+                  <span class="rank">{i + 1}</span><div><h4>{a.title}</h4><div class="t-meta">{a.catName.toUpperCase()}</div></div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

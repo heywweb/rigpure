@@ -1,0 +1,26 @@
+---
+import { badgeClass, fmtDate, readTime } from '../lib/util';
+interface Props { art: any; index?: number }
+const { art, index } = Astro.props;
+const href = `/${art.catSlug}/${art.slug}`;
+const idx = index != null ? `// ${String(index).padStart(3, '0')}` : '';
+let right = '';
+if (art.catSlug === 'news') right = fmtDate(art.published_at);
+else if (art.catSlug === 'reviews') right = art.rating ? `${art.rating}/10` : 'REVIEW';
+else if (art.catSlug === 'guides') right = art.tier ? `TIER ${art.tier}` : 'GUIDE';
+else right = fmtDate(art.published_at);
+---
+<article class="card">
+  <a href={href} style="display:contents; color:inherit;">
+    <div class="thumb">
+      {art.cover ? <img src={art.cover} alt={art.cover_alt || art.title} loading="lazy" /> : <div class="ph-img ph-1">{art.catName}</div>}
+      <span class={`${badgeClass(art.catSlug)} cat`}>{art.catName}</span>
+    </div>
+    <div class="body">
+      {idx && <span class="idx">{idx}</span>}
+      <h3>{art.title}</h3>
+      {art.dek && <p class="excerpt">{art.dek}</p>}
+      <div class="meta"><span>{readTime(art.reading_time)}</span>{right && <><span class="sep">·</span><span>{right}</span></>}</div>
+    </div>
+  </a>
+</article>

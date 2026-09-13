@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warden DPS build: the complete guide (patch 3.4) — BlogStarter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- SOURCE DE VÉRITÉ : styles-v2.css. Aucun style de composant dans cette page. -->
+<link rel="stylesheet" href="styles-v2.css">
+</head>
+<body>
+
+<!-- PROGRESSION DE LECTURE (JS) -->
+<div class="reading-progress" style="position:sticky;top:0;z-index:60"><span id="progress" style="width:0"></span></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container">
+    <a href="#" class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="#07080b" aria-hidden="true"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span>
+      <span class="logo-text"><b>BLOG</b><span>STARTER</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#" class="active" aria-current="page">Guides</a>
+      <a href="#">News</a>
+      <a href="#">Reviews</a>
+      <a href="#">Setup</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>SEARCH</span>
+      </div>
+      <a href="#" class="btn btn-primary btn-sm">Subscribe</a>
+    </div>
+  </div>
+</header>
+
+<!-- BARRE D'ANNONCE -->
+<div class="announce-bar"><div class="container"><div class="inner"><span class="pill">Patch 3.4</span><span>This build is up to date. A nerf is announced for 3.5.</span><a href="#">Details →</a><button class="close" aria-label="Close announcement">✕</button></div></div></div>
+
+<div class="article-wrap">
+
+  <!-- EN-TÊTE -->
+  <div class="container">
+    <div class="article-head">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="#">Home</a><span class="chev" aria-hidden="true">/</span><a href="#">Guides</a><span class="chev" aria-hidden="true">/</span><a href="#">Eclipse Online</a><span class="chev" aria-hidden="true">/</span><span class="current">Warden DPS</span></nav>
+      <div class="head-tags"><span class="badge">Build</span><span class="badge success"><span class="dot" aria-hidden="true"></span>Up to date · patch 3.4</span><span class="badge info">End-game</span></div>
+      <h1>Warden DPS build: the complete end-game guide</h1>
+      <p class="dek">Gear, stats, talent tree and optimal rotation — tested over 40 hours of end-game content to turn your Warden into a damage machine.</p>
+      <div class="article-byline">
+        <span class="who"><span class="mini-av" aria-hidden="true">A</span> By <strong style="color:var(--text)">Alex</strong></span>
+        <span class="sep" aria-hidden="true">·</span><span>UPD AUG 24, 2026</span>
+        <span class="sep" aria-hidden="true">·</span><span>9 MIN</span>
+        <span class="sep" aria-hidden="true">·</span><span>2.3K VIEWS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE HERO -->
+  <div class="article-hero"><div class="frame"><div class="ph-img ph-2">WARDEN · DPS BUILD</div></div></div>
+
+
+  <!-- CORPS + SIDEBAR -->
+  <div class="container">
+    <div class="article-body">
+
+      <!-- MAIN -->
+      <main class="article-main flow">
+
+        <!-- RÉSUMÉ AT-A-GLANCE (un seul module : verdict + stats + infos-clés) -->
+        <section class="article-summary" aria-label="Build summary">
+          <div class="as-top">
+            <div class="as-verdict">
+              <div class="as-head"><span class="tier s">S</span><h2>Verdict</h2></div>
+              <p>One of the best offensive picks of patch 3.4: very high sustained damage, easy to pick up and F2P-viable. Excellent both solo and in a team.</p>
+              <div class="as-rating"><span class="rating"><span class="score">9.2</span><span class="over">/ 10</span></span><span class="badge success"><span class="dot" aria-hidden="true"></span>Recommended</span></div>
+            </div>
+            <div class="as-stats">
+              <div class="stat"><div class="stat-top"><span class="stat-name">Damage</span><span class="stat-val">94</span></div><div class="meter"><span style="width:94%"></span></div></div>
+              <div class="stat"><div class="stat-top"><span class="stat-name">Survivability</span><span class="stat-val">71</span></div><div class="meter warning"><span style="width:71%"></span></div></div>
+              <div class="stat"><div class="stat-top"><span class="stat-name">Mobility</span><span class="stat-val">58</span></div><div class="meter"><span style="width:58%"></span></div></div>
+              <div class="stat"><div class="stat-top"><span class="stat-name">Difficulty</span><span class="stat-val">32</span></div><div class="meter danger"><span style="width:32%"></span></div></div>
+            </div>
+          </div>
+          <div class="as-facts">
+            <div class="as-fact"><div class="k">Class</div><div class="v">Warden</div></div>
+            <div class="as-fact"><div class="k">Role</div><div class="v">Melee DPS</div></div>
+            <div class="as-fact"><div class="k">Content</div><div class="v">End-game</div></div>
+            <div class="as-fact"><div class="k">F2P cost</div><div class="v">Accessible</div></div>
+          </div>
+        </section>
+
+        <!-- APERÇU -->
+        <div class="prose flow-sm">
+          <h2 id="apercu">Build overview</h2>
+          <p>The <strong>Warden</strong> has gone from a purely defensive role to a genuine offensive threat since the patch 3.2 rework. This build leans on <strong>crit rate</strong> and <strong>crit damage</strong> to maximize damage spikes, while keeping enough survivability to grind through end-game content.</p>
+          <p>The class is very forgiving: the rotation window is wide. It's an <a href="#">excellent first DPS</a> to ramp up your power without frying your nerves.</p>
+        </div>
+
+        <div class="callout"><span class="c-label">Requirements</span><p>Level 70+ with at least one legendary set. For leveling up, see our <a href="#">Warden leveling guide</a>.</p></div>
+
+        <!-- STUFF & STATS -->
+        <div class="prose flow-sm">
+          <h2 id="stuff">Gear & stats</h2>
+          <p>Stat priority is the backbone of the build. Follow this order before optimizing anything else:</p>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Stat</th><th>Priority</th><th>Target</th><th>Impact</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Crit rate</strong></td><td>1</td><td>70%</td><td>Very high</td></tr>
+            <tr><td><strong>Crit damage</strong></td><td>2</td><td>200%+</td><td>Very high</td></tr>
+            <tr><td><strong>Mastery</strong></td><td>3</td><td>800</td><td>Medium</td></tr>
+            <tr><td><strong>Attack speed</strong></td><td>4</td><td>110%</td><td>Low</td></tr>
+          </tbody>
+        </table>
+        <div class="prose flow-sm">
+          <p>Aim for a <strong>1:2 crit ratio</strong> (70% rate to 200% damage) before stacking mastery.</p>
+          <blockquote>"The classic trap: chasing crit damage while neglecting crit rate. Consistency always wins in the long run."</blockquote>
+          <h3 id="pieces">Recommended pieces</h3>
+        </div>
+        <div class="loadout">
+          <div class="slot"><div class="s-ico" aria-hidden="true">⚔️</div><div><div class="s-label">Weapon</div><div class="s-name">Dawnblade</div></div></div>
+          <div class="slot"><div class="s-ico" aria-hidden="true">🪖</div><div><div class="s-label">Helmet</div><div class="s-name">Furious Helm</div></div></div>
+          <div class="slot"><div class="s-ico" aria-hidden="true">🛡️</div><div><div class="s-label">Chest</div><div class="s-name">Rampart Breastplate</div></div></div>
+          <div class="slot"><div class="s-ico" aria-hidden="true">💍</div><div><div class="s-label">Ring</div><div class="s-name">Crit Seal</div></div></div>
+          <div class="slot"><div class="s-ico" aria-hidden="true">📿</div><div><div class="s-label">Amulet</div><div class="s-name">Mastery Talisman</div></div></div>
+          <div class="slot"><div class="s-ico" aria-hidden="true">🔮</div><div><div class="s-label">Relic</div><div class="s-name">Dawn Shard</div></div></div>
+        </div>
+
+        <!-- 1re PUB : après 2 sections, lecteur accroché -->
+        <div class="ad-slot ad-inline"><div class="ad-inner">Ad space · in-article</div></div>
+
+        <div class="callout tip"><span class="c-label">F2P tip</span><p>No legendary? The <strong>Rampart</strong> set (purple, farmable) only loses ~8% damage. Enough for all non-ranked content.</p></div>
+
+        <!-- POUR / CONTRE -->
+        <div class="proscons">
+          <div class="pc-col pros"><h4>Strengths</h4><ul><li>Very high sustained damage</li><li>Easy to pick up</li><li>F2P-viable</li><li>Good both solo and in a team</li></ul></div>
+          <div class="pc-col cons"><h4>Weaknesses</h4><ul><li>Average mobility</li><li>Reliant on crit rate</li><li>Nerf announced for patch 3.5</li></ul></div>
+        </div>
+
+        <!-- TALENTS -->
+        <div class="prose flow-sm">
+          <h2 id="talents">Talent tree</h2>
+          <p>The tree is built around the central offensive branch. Invest in this order:</p>
+          <ol>
+            <li>Sure Strike — increases base crit rate.</li>
+            <li>Killing Momentum — crits reduce your ultimate's cooldown.</li>
+            <li>Second Wind — a safety net against silly deaths.</li>
+            <li>Apex — the final node that unlocks the real potential.</li>
+          </ol>
+        </div>
+
+        <div class="ad-slot ad-rectangle"><div class="ad-inner">Rectangle 300×250 · mid-article</div></div>
+
+        <!-- ROTATION + F2P -->
+        <div class="prose flow-sm">
+          <h2 id="rotation">Combat rotation</h2>
+          <p>The rotation is deliberately simple — that's the class's strength. On loop:</p>
+          <p><code>Mark → Heavy Strike ×2 → Perfect Dodge → Ultimate</code></p>
+          <p>The only subtlety: never fire the ultimate without the +15% window opened by a perfect dodge.</p>
+          <h2 id="f2p">F2P alternatives</h2>
+          <p>This entire build is playable without spending a cent: slightly less raw damage, a longer grind, and 100% of the content accessible. See also our <a href="#">complete DPS tier list</a>.</p>
+        </div>
+
+        <!-- FAQ -->
+        <h2 class="h-section" id="faq">FAQ</h2>
+        <div class="faq">
+          <details open><summary>Is this build F2P-viable?</summary><div class="faq-body">Yes, fully. The farmable "Rampart" set only loses ~8% damage compared to the legendary.</div></details>
+          <details><summary>What's the minimum level to run it?</summary><div class="faq-body">Level 70+ with at least one complete legendary or purple gear set.</div></details>
+          <details><summary>Does the build hold up after patch 3.5?</summary><div class="faq-body">A nerf to the ultimate is announced. The page will be updated as soon as the values are confirmed.</div></details>
+        </div>
+
+        <!-- SOURCES -->
+        <div class="sources"><h4>// Sources</h4><ol><li>Official 3.4 patch notes — <a href="#">publisher site</a></li><li>Community datamining — <a href="#">wiki</a></li><li>In-game testing, 40 h — author</li></ol></div>
+
+        <!-- AUTEUR -->
+        <div class="author-box">
+          <div class="avatar" aria-hidden="true">D</div>
+          <div>
+            <div class="a-name">Alex <svg class="verified" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified author"><path d="M12 2l2.4 1.8 3 .1 1 2.8 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-1 2.8-3 .1L12 22l-2.4-1.8-3-.1-1-2.8L3.2 15.5l.9-2.9-.9-2.9 2.4-1.8 1-2.8 3-.1z"/><path d="M9.5 12.5l1.8 1.8 3.5-3.8" stroke="#07080b" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div>
+            <div class="a-role">Writer · 800+ h in-game · Diamond</div>
+            <p class="a-bio">Ranked theorycrafter since launch. Every build is tested in real conditions on end-game content before publication.</p>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="article-side">
+        <nav class="toc" aria-label="Contents">
+          <div class="toc-title">// Contents</div>
+          <ol>
+            <li><a href="#apercu" class="active">Build overview</a></li>
+            <li><a href="#stuff">Gear & stats</a></li>
+            <li><a href="#talents">Talent tree</a></li>
+            <li><a href="#rotation">Combat rotation</a></li>
+            <li><a href="#f2p">F2P alternatives</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ol>
+        </nav>
+        <div class="ad-slot ad-rectangle"><div class="ad-inner">Rectangle 300×250<br>sidebar sticky</div></div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- ARTICLES LIÉS -->
+  <div class="article-related">
+    <div class="container">
+      <div class="section-head"><h2>Read next</h2><a href="#" class="see-all">View all →</a></div>
+      <div class="related-grid">
+        <article class="card"><div class="thumb"><div class="ph-img ph-2">Tier List</div><span class="badge info cat">Tier List</span></div><div class="body"><span class="idx">// 001</span><h3>DPS tier list — Season 5</h3><p class="excerpt">Where does the Warden rank against the current meta?</p><div class="meta"><span>12 MIN</span><span class="sep">·</span><span>UPD YESTERDAY</span></div></div></article>
+        <article class="card"><div class="thumb"><div class="ph-img ph-3">Guide</div><span class="badge success cat">Guide</span></div><div class="body"><span class="idx">// 002</span><h3>Warden leveling 1–70</h3><p class="excerpt">The fastest path to the end-game.</p><div class="meta"><span>7 MIN</span><span class="sep">·</span><span>BEGINNER</span></div></div></article>
+        <article class="card"><div class="thumb"><div class="ph-img ph-4">Setup</div><span class="badge warning cat">Setup</span></div><div class="body"><span class="idx">// 003</span><h3>What PC build for 144 fps?</h3><p class="excerpt">Our hardware recommendations by budget.</p><div class="meta"><span>10 MIN</span><span class="sep">·</span><span>BUYING GUIDE</span></div></div></article>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="f-col f-about"><a href="#" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="#07080b" aria-hidden="true"><path d="M2 20 L8.5 7 L12.5 13.5 L15.5 8.5 L22 20 Z"/></svg></span><span class="logo-text"><b>BLOG</b><span>STARTER</span></span></a><p>Guides, builds and tier lists tested in-game. Real hands-on expertise from players, not mass-produced content.</p></div>
+      <div class="f-col"><h4>Content</h4><a href="#">Guides</a><a href="#">News</a><a href="#">Reviews</a><a href="#">Setup</a></div>
+      <div class="f-col"><h4>The site</h4><a href="#">About</a><a href="#">The team</a><a href="#">Contact</a></div>
+      <div class="f-col"><h4>Legal</h4><a href="#">Legal notice</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 BLOGSTARTER — All rights reserved.</span><span>DESIGN SYSTEM V2.1 · COMMAND HUD</span></div>
+  </div>
+</footer>
+
+<!-- ANCRE PUB (mobile only, apparaît après la byline, fermable) -->
+<div class="ad-anchor" id="anchorAd"><div class="ad-slot ad-leaderboard"><div class="ad-inner">Anchored banner 728×90</div></div><button class="close" aria-label="Close" onclick="closeAnchor()">✕</button></div>
+
+<script>
+  // Barre de progression de lecture
+  var bar = document.getElementById('progress');
+  var main = document.querySelector('.article-main');
+  function onScroll(){
+    if(!main) return;
+    var top = main.offsetTop, h = main.offsetHeight, vh = window.innerHeight;
+    var p = (window.scrollY - top + vh*0.5) / h;
+    bar.style.width = Math.max(0, Math.min(1, p)) * 100 + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+  // Scrollspy du sommaire
+  var tocLinks = document.querySelectorAll('.toc a');
+  var mapT = {};
+  tocLinks.forEach(function(a){ var id=a.getAttribute('href').slice(1); var el=document.getElementById(id); if(el) mapT[id]=a; });
+  var obs = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ tocLinks.forEach(function(a){a.classList.remove('active');}); if(mapT[e.target.id]) mapT[e.target.id].classList.add('active'); }});
+  }, { rootMargin:'-70px 0px -75% 0px' });
+  ['apercu','stuff','talents','rotation','f2p','faq'].forEach(function(id){ var el=document.getElementById(id); if(el) obs.observe(el); });
+
+  // Ancre pub : apparaît (mobile) après avoir dépassé la byline ; fermable
+  var anchor = document.getElementById('anchorAd');
+  var byline = document.querySelector('.article-byline');
+  var anchorClosed = false;
+  function toggleAnchor(){ if(anchorClosed || !byline || !anchor) return; anchor.classList.toggle('is-visible', byline.getBoundingClientRect().bottom < 0); }
+  window.closeAnchor = function(){ anchorClosed = true; anchor.classList.remove('is-visible'); };
+  window.addEventListener('scroll', toggleAnchor, { passive:true }); toggleAnchor();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+---
+// HOME (exemple). {{categories}} — les sections « Latest guides / Latest news » et la grille
+// de jeux sont des exemples : le skill les adapte aux catégories de blog.config.json.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import AdLeaderboard from '../components/AdLeaderboard.astro';
+import AdRectangle from '../components/AdRectangle.astro';
+import { latest, latestInCategory, listGames, trending } from '../lib/queries';
+import { badgeClass, fmtDate, readTime } from '../lib/util';
+import { env } from 'cloudflare:workers';
+
+const DB = (env as any).DB as D1Database;
+const feat = await latest(DB, 4);
+const feature = feat[0];
+const side = feat.slice(1, 4);
+const games = await listGames(DB, 8);
+const guides = await latestInCategory(DB, 'guides', 4);
+const news = await latestInCategory(DB, 'news', 4);
+const trend = await trending(DB, 4);
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+---
+<BaseLayout title="{{brand}} — {{niche}}" active="">
+  <!-- TOP AD -->
+  <div class="ad-band"><div class="container"><AdLeaderboard /></div></div>
+
+  <div class="article-wrap">
+    <!-- HERO / SPOTLIGHT -->
+    <div class="container">
+      <div class="section-head" style="border:none;padding-bottom:0;margin-bottom:16px"><h2>Featured</h2></div>
+      {feature && (
+        <div class="spotlight">
+          <a class="feature" href={`/${feature.catSlug}/${feature.slug}`} style="color:inherit">
+            {feature.cover && <img class="bg" src={feature.cover} alt={feature.cover_alt || feature.title} />}
+            <span class={`${badgeClass(feature.catSlug)}`} style="align-self:flex-start">{feature.catName}</span>
+            <h2>{feature.title}</h2>
+          </a>
+          <div class="side">
+            {side.map((a: any) => (
+              <a class="mini" href={`/${a.catSlug}/${a.slug}`} style="color:inherit">
+                <div class="thumb">{a.cover ? <img src={a.cover} alt={a.cover_alt || a.title} loading="lazy" /> : <div class="ph-img ph-1"></div>}</div>
+                <div><h4>{a.title}</h4><div class="m-meta">{a.catName.toUpperCase()} · {readTime(a.reading_time)}</div></div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <!-- GAMES -->
+    <div class="container" style="margin-top:var(--s8)">
+      <div class="section-head"><h2>Covered topics</h2><a href="#" class="see-all">See all →</a></div>
+      <div class="grid cols-4">
+        {games.map((g: any) => (
+          <a class="game-card" href={`/guides`}>
+            {g.cover ? <img class="bg" src={g.cover} alt={g.name} loading="lazy" /> : <div class="bg ph-img ph-1"></div>}
+            <div><span class="g-name">{g.name}</span><span class="g-count">{g.n} articles</span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- MAIN + SIDEBAR -->
+    <div class="container">
+      <div class="listing-layout">
+        <main>
+          <div class="section-head"><h2>Latest guides</h2><a href="/guides" class="see-all">View all →</a></div>
+          <div class="grid cols-2">{guides.map((a: any, i: number) => <ArticleCard art={a} index={i + 1} />)}</div>
+
+          <div class="ad-slot ad-inline" style="margin-top:20px"><div class="ad-inner">Native in-feed block</div></div>
+
+          <div class="section-head" style="margin-top:var(--s7)"><h2>Latest news</h2><a href="/news" class="see-all">All news →</a></div>
+          <div class="grid cols-2">{news.map((a: any, i: number) => <ArticleCard art={a} index={i + 1} />)}</div>
+        </main>
+
+        <aside class="listing-side">
+          <AdRectangle />
+          <div>
+            <div class="section-head" style="margin-bottom:14px"><h2 style="font-size:var(--fs-lg)">Trending</h2></div>
+            <div class="trending">
+              {trend.map((a: any, i: number) => (
+                <a class="tr-item" href={`/${a.catSlug}/${a.slug}`} style={`color:inherit;${i === trend.length - 1 ? 'border:none' : ''}`}>
+                  <span class="rank">{i + 1}</span>
+                  <div><h4>{a.title}</h4><div class="t-meta">{a.catName.toUpperCase()}</div></div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="container" style="margin-top:var(--s8)">
+      <div class="newsletter"><h3>Never miss a post</h3><p>Fresh guides and reviews, straight to your inbox. Zero spam.</p><form class="nl-form" onsubmit="return false"><input type="email" placeholder="you@email.com" /><button class="btn btn-primary">OK</button></form></div>
+    </div>
+  </div>
+</BaseLayout>

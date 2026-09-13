@@ -1,0 +1,11 @@
+---
+// Medium rectangle 300×250 — emplacement d'annonce. Remplacer par votre créative
+// servie depuis R2 (/media/ads/…) une fois disponible.
+interface Props { href?: string }
+const { href = '#' } = Astro.props;
+---
+<div class="ad-slot ad-rectangle">
+  <a href={href} rel="sponsored nofollow" aria-label="Advertisement">
+    <div class="ad-inner">Advertisement · 300×250</div>
+  </a>
+</div>
