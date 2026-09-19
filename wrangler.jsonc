@@ -15,20 +15,14 @@
 		{
 			"binding": "DB",
 			"database_name": "rigpure-db",
-			"database_id": "<VOTRE_DATABASE_ID>",
+			"database_id": "a167cff1-0603-45a5-b5b8-434f16246621",
 			"migrations_dir": "migrations"
-		}
-	],
-	"r2_buckets": [
-		{
-			"binding": "MEDIA",
-			"bucket_name": "rigpure-media"
 		}
 	],
 	"kv_namespaces": [
 		{
 			"binding": "SESSION",
-			"id": "<VOTRE_KV_NAMESPACE_ID>"
+			"id": "56d8d84ea8aa4425b37dad30af569c5c"
 		}
 	],
 	"vars": {
