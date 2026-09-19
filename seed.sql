@@ -1499,4 +1499,195 @@ INSERT INTO article_tags (article_id,tag_id) VALUES (15,15);
 INSERT INTO article_tags (article_id,tag_id) VALUES (15,27);
 INSERT INTO article_tags (article_id,tag_id) VALUES (15,32);
 INSERT INTO article_tags (article_id,tag_id) VALUES (15,9);
+INSERT INTO articles (id,slug,title,dek,body_md,body_html,category_id,game_id,author_id,cover,cover_alt,cover_source,video_url,reading_time,rating,verdict,pros,cons,tier,published_at,updated_at,views,featured,meta_description,og_image,canonical,noindex,draft) VALUES (16,'mu-dark-epoch','MU: Dark Epoch','A faithful, nostalgia-driven remaster of the classic MU Online formula — worth downloading if you love loot-heavy grinding, but don''t expect it to break new ground.','
+MU: Dark Epoch is a free-to-play fantasy MMORPG from 37GAMES that revives the classic MU Online formula with remastered 2.5D visuals, dynamic costumes, and fast, loot-heavy combat. Players pick an iconic class, grind through team dungeons, boss hunts, and PvP arenas, and chase deep gear enhancement, wings, and awakening systems. Heavy AFK/auto-battle support and generous drop rates keep progression flowing on both mobile and PC, with cross-platform shared servers tying the whole experience together. <a href="/go/darkepoch" rel="sponsored noopener" target="_blank">Play MU: Dark Epoch now</a> on the official site.
+
+## Quick Facts
+
+| | |
+| --- | --- |
+| Developer | 37GAMES |
+| Publisher | 37GAMES |
+| Global launch | October 16, 2025 |
+| Steam release | October 16, 2025 |
+| Model | Free-to-play (with in-app purchases) |
+| Genre | MMORPG · Action RPG · Massively Multiplayer · Fantasy · Adventure |
+| Platforms | PC (Windows via Steam), Android, iOS |
+
+## Gameplay Overview
+
+MU: Dark Epoch leans directly into the DNA of the original MU Online, rebuilt with a modernized 2.5D isometric engine. New players choose from four classes, each filling a distinct role:
+
+- **Dark Knight** — melee tank/bruiser, built to soak damage and lead the charge
+- **Dark Wizard** — ranged magic DPS with strong crowd control
+- **Elf** — ranged support/DPS hybrid focused on buffs and sustained damage
+- **Summoner** — a party commander who fights through summoned creatures
+
+The core loop revolves around dungeon runs, boss hunts, and PvP arenas, with gear enhancement, wings, and character awakening systems forming the long-term progression ladder. A heavy auto-battle and AFK system lets players clear content passively, which is either the game''s biggest draw or its biggest turn-off, depending on what you''re looking for. Cross-platform shared servers mean mobile and PC players grind side by side in the same economy.
+
+## Who Is This Game For?
+
+If you have fond memories of classic MU Online or want a low-effort, comfortable AFK MMORPG to chip away at during downtime, MU: Dark Epoch delivers exactly that experience. If you''re looking for hands-on, skill-based combat or a truly free-to-win progression economy, it''s worth tempering your expectations — this is a familiar formula polished up, not a reinvention. <a href="/go/darkepoch" rel="sponsored noopener" target="_blank">Download MU: Dark Epoch</a> to see which side you land on.
+
+## Gallery
+
+<div class="gallery-grid">
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-1.webp" alt="MU: Dark Epoch screenshot 1" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-2.webp" alt="MU: Dark Epoch screenshot 2" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-3.webp" alt="MU: Dark Epoch screenshot 3" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-4.webp" alt="MU: Dark Epoch screenshot 4" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+</div>
+
+## System Requirements
+
+**PC (Steam) — Minimum**
+
+| | |
+| --- | --- |
+| OS | Windows 10 64-bit |
+| Processor | Intel Core i3 or equivalent |
+| Memory | 4 GB RAM |
+| Graphics | DirectX 11-compatible GPU |
+| Storage | ~3–5 GB available space |
+
+**PC (Steam) — Recommended**
+
+| | |
+| --- | --- |
+| OS | Windows 10/11 64-bit |
+| Processor | Intel Core i5 or equivalent |
+| Memory | 8 GB RAM |
+| Graphics | Dedicated GPU with 2GB+ VRAM |
+| Storage | SSD with 5+ GB available space |
+
+**Mobile (Android/iOS)**
+
+Roughly 1.5–2 GB of storage depending on platform, and a stable internet connection is required — there''s no offline mode. Always check the official Steam page or app store listing for the most current requirements, as these can change post-launch.
+
+## Is It Worth Downloading?
+
+For a free-to-play title, yes — the download cost is low relative to the amount of content available, and the AFK systems mean you''re not locked into long active sessions to see progress. The main cost isn''t storage space; it''s the time and potential spending required to stay competitive at endgame. <a href="/go/darkepoch" rel="sponsored noopener" target="_blank">Get MU: Dark Epoch on the official site</a>.
+
+**Score: 6.5/10 — Mixed**
+','<p>MU: Dark Epoch is a free-to-play fantasy MMORPG from 37GAMES that revives the classic MU Online formula with remastered 2.5D visuals, dynamic costumes, and fast, loot-heavy combat. Players pick an iconic class, grind through team dungeons, boss hunts, and PvP arenas, and chase deep gear enhancement, wings, and awakening systems. Heavy AFK/auto-battle support and generous drop rates keep progression flowing on both mobile and PC, with cross-platform shared servers tying the whole experience together. <a href="/go/darkepoch" rel="sponsored noopener" target="_blank">Play MU: Dark Epoch now</a> on the official site.</p>
+<h2>Quick Facts</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Developer</td>
+<td>37GAMES</td>
+</tr>
+<tr>
+<td>Publisher</td>
+<td>37GAMES</td>
+</tr>
+<tr>
+<td>Global launch</td>
+<td>October 16, 2025</td>
+</tr>
+<tr>
+<td>Steam release</td>
+<td>October 16, 2025</td>
+</tr>
+<tr>
+<td>Model</td>
+<td>Free-to-play (with in-app purchases)</td>
+</tr>
+<tr>
+<td>Genre</td>
+<td>MMORPG · Action RPG · Massively Multiplayer · Fantasy · Adventure</td>
+</tr>
+<tr>
+<td>Platforms</td>
+<td>PC (Windows via Steam), Android, iOS</td>
+</tr>
+</tbody></table>
+<h2>Gameplay Overview</h2>
+<p>MU: Dark Epoch leans directly into the DNA of the original MU Online, rebuilt with a modernized 2.5D isometric engine. New players choose from four classes, each filling a distinct role:</p>
+<ul>
+<li><strong>Dark Knight</strong> — melee tank/bruiser, built to soak damage and lead the charge</li>
+<li><strong>Dark Wizard</strong> — ranged magic DPS with strong crowd control</li>
+<li><strong>Elf</strong> — ranged support/DPS hybrid focused on buffs and sustained damage</li>
+<li><strong>Summoner</strong> — a party commander who fights through summoned creatures</li>
+</ul>
+<p>The core loop revolves around dungeon runs, boss hunts, and PvP arenas, with gear enhancement, wings, and character awakening systems forming the long-term progression ladder. A heavy auto-battle and AFK system lets players clear content passively, which is either the game&#39;s biggest draw or its biggest turn-off, depending on what you&#39;re looking for. Cross-platform shared servers mean mobile and PC players grind side by side in the same economy.</p>
+<h2>Who Is This Game For?</h2>
+<p>If you have fond memories of classic MU Online or want a low-effort, comfortable AFK MMORPG to chip away at during downtime, MU: Dark Epoch delivers exactly that experience. If you&#39;re looking for hands-on, skill-based combat or a truly free-to-win progression economy, it&#39;s worth tempering your expectations — this is a familiar formula polished up, not a reinvention. <a href="/go/darkepoch" rel="sponsored noopener" target="_blank">Download MU: Dark Epoch</a> to see which side you land on.</p>
+<h2>Gallery</h2>
+<div class="gallery-grid">
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-1.webp" alt="MU: Dark Epoch screenshot 1" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-2.webp" alt="MU: Dark Epoch screenshot 2" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-3.webp" alt="MU: Dark Epoch screenshot 3" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+<figure><img src="/wp-content/uploads/2026/09/13/mu-dark-epoch-review-4.webp" alt="MU: Dark Epoch screenshot 4" loading="lazy"><figcaption>Credit: 37Games</figcaption></figure>
+</div><h2>System Requirements</h2>
+<p><strong>PC (Steam) — Minimum</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OS</td>
+<td>Windows 10 64-bit</td>
+</tr>
+<tr>
+<td>Processor</td>
+<td>Intel Core i3 or equivalent</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>4 GB RAM</td>
+</tr>
+<tr>
+<td>Graphics</td>
+<td>DirectX 11-compatible GPU</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>~3–5 GB available space</td>
+</tr>
+</tbody></table>
+<p><strong>PC (Steam) — Recommended</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OS</td>
+<td>Windows 10/11 64-bit</td>
+</tr>
+<tr>
+<td>Processor</td>
+<td>Intel Core i5 or equivalent</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>8 GB RAM</td>
+</tr>
+<tr>
+<td>Graphics</td>
+<td>Dedicated GPU with 2GB+ VRAM</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>SSD with 5+ GB available space</td>
+</tr>
+</tbody></table>
+<p><strong>Mobile (Android/iOS)</strong></p>
+<p>Roughly 1.5–2 GB of storage depending on platform, and a stable internet connection is required — there&#39;s no offline mode. Always check the official Steam page or app store listing for the most current requirements, as these can change post-launch.</p>
+<h2>Is It Worth Downloading?</h2>
+<p>For a free-to-play title, yes — the download cost is low relative to the amount of content available, and the AFK systems mean you&#39;re not locked into long active sessions to see progress. The main cost isn&#39;t storage space; it&#39;s the time and potential spending required to stay competitive at endgame. <a href="/go/darkepoch" rel="sponsored noopener" target="_blank">Get MU: Dark Epoch on the official site</a>.</p>
+<p><strong>Score: 6.5/10 — Mixed</strong></p>
+',1,3,1,'/wp-content/uploads/2026/09/13/mu-dark-epoch-review-cover.webp','MU: Dark Epoch key art, remastered 2.5D fantasy MMORPG combat','37Games','/videos/mu-dark-epoch.mp4',6,NULL,NULL,NULL,NULL,NULL,'2026-09-13','2026-09-13',0,0,'A faithful, nostalgia-driven remaster of the classic MU Online formula — worth downloading if you love loot-heavy grinding, but don''t expect it to break new ground.','/wp-content/uploads/2026/09/13/mu-dark-epoch-review-cover.webp',NULL,0,0);
+INSERT INTO article_tags (article_id,tag_id) VALUES (16,1),(16,8),(16,20),(16,21),(16,33);
 PRAGMA foreign_keys=ON;
